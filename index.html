@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Chattanooga Parking Network Map</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@6.3.0/dist/maplibre-gl.css' />
+    <script src="https://unpkg.com/pmtiles@3.2.0/dist/pmtiles.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Google Sans Flex", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+            font-variation-settings:
+                "slnt" 0,
+                "wdth" 100,
+                "GRAD" 0,
+                "ROND" 0;
+        }
+    </style>
+
+    <script>
+        /*
+            z-index:
+            10 - header
+            9 - left panel right panel
+        */
+    </script>
+    <style>
+        body {
+            bottom: 0;
+            left: 0;
+            margin: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        html, body, #map { height: 100%; }
+
+        header {
+            /* background: red; */
+            box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+            height: 100px;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 10;
+        }
+        #header-content {
+            left: 25px;
+            height: 50px;
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: calc(100% - 25px - 25px);
+        }
+        #header-content-left {
+            display: block;
+            height: 50px;
+            width: 75%;
+        }
+        #header-content-left-logo {
+            display: inline-block;
+            height: 50px;
+            position: relative;
+            width: 50px;
+            vertical-align: middle;
+        }
+        #header-content-left-title {
+            display: inline-block;
+            height: 50px;
+            margin-left: 5px;
+            position: relative;
+            vertical-align: middle;
+        }
+        #header-content-left-title-upper {
+            color: #32393f;
+            font-size: 12pt;
+        }
+
+        #header-content-left-title-bottom {
+            color: #001f45;
+            font-size: 24pt;
+            font-weight: bold;
+        }
+        #about {
+            background: #062945;
+            box-sizing: border-box;
+            color: #e9eced;
+            height: 200px;
+            padding: 25px;
+        }
+        #about-h1 {
+            margin-bottom: 20px;
+        }
+        #about-content {
+            line-height: 20px;
+        }
+
+        #price-guide {
+            background: white;
+            border-bottom: 2px solid lightgray;
+            box-sizing: border-box;
+            padding: 25px;
+        }
+        #price-guide-title {
+            margin-bottom: 5px;
+        }
+        #price-guide-title-main {
+            color: #050d25;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        #price-guide-title-sub {
+            color: #5a5958;
+            font-size: 10px;
+            font-weight: normal;
+            margin-left: 4px;
+        }
+        .price-guide-row {
+            height: 75px;
+            margin-top: 10px;
+            position: relative;
+        }
+        .price-guide-row-left {
+            left: 0;
+            height: 50px;
+            position: absolute;
+            width: 25px;
+        }
+        .price-guide-circle {
+            border-radius: 25px;
+            height: 25px;
+            width: 25px;
+        }
+        #price-guide-circle-great {
+            background: #048e23;
+        }
+        #price-guide-circle-moderate {
+            background: #feba02;
+        }
+        #price-guide-circle-higher-cost {
+            background: #d1120f;
+        }
+        #price-guide-row-title-great {
+            color: #048e23;
+            font-weight: bold;
+        }
+        #price-guide-row-title-moderate {
+            color: #feba02;
+            font-weight: bold;
+        }
+        #price-guide-row-title-higher-cost {
+            color: #d1120f;
+            font-weight: bold;
+        }         
+
+        .price-guide-row-right {
+            left: 25px;
+            padding-left: 5px;
+            position: absolute;
+            width: 150px;
+        }
+
+        #header-content-right {
+            left: auto;
+            position: absolute;
+            right: 0;
+            width: 25%;
+        }
+        #header-content-right-title {
+            background: blue;
+            font-weight: bold;
+        }
+        #header-content-right-subtitle {
+            color: black;
+        }
+
+        #middle {
+            bottom: 100px;
+            left: 0;
+            right: 0;
+            top: 100px;
+            position: absolute;
+        }
+
+        #left-panel, #right-panel {
+            z-index: 9;            
+        }
+
+        #left-panel {
+            background: white;
+            bottom: 0;
+            box-shadow: 3px 0 3px -1px rgba(0, 0, 0, 0.3);
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 250px;
+        }
+
+        #legend {
+            background: white;
+            box-sizing: border-box;
+            height: 175px;
+            padding: 25px;
+        }
+        #legend-title {
+            color: #070b21;
+        }
+        .legend-row {
+            display: block;
+            height: 20px;
+            margin: 10px 5px;
+            position: relative;
+        }
+        .legend-icon-col {
+            height: 20px;
+            left: 0;
+            position: absolute;
+            width: 20px;
+        }
+        .legend-icon {
+            border-radius: 50%;
+            color: whitesmoke;
+            display: block;
+            height: 20px;
+            margin: 0;
+            width: 20px;
+        }
+        #legend-icon-public-garage {
+            background: radial-gradient(circle at 5px 5px, #5cabff, #000);
+            border-radius: 50%;
+            color: whitesmoke;
+            display: block;
+            height: 20px;
+            margin: 0;
+            width: 20px;          
+        }
+        #legend-icon-public-lot {
+            background: radial-gradient(circle at 1px 1px, #5cabff, #0763a8);
+            border-radius: 2px;
+            box-shadow: 2px 1px 1px lightgrays;            
+            color: whitesmoke;
+            display: block;
+            height: 20px;
+            margin: 0;
+            width: 20px;          
+        }
+        #legend-icon-private-garage {
+            background: radial-gradient(circle at 5px 5px, #1a3048, #000);
+            border-radius: 50%;
+            color: whitesmoke;
+            display: block;
+            height: 20px;
+            margin: 0;
+            width: 20px;          
+        }
+        #legend-icon-private-lot {
+            background: radial-gradient(circle at 1px 1px, #1a3048, #000);
+            border-radius: 2px;
+            box-shadow: 2px 1px 1px lightgrays;            
+            color: whitesmoke;
+            display: block;
+            height: 20px;
+            margin: 0;
+            width: 20px;          
+        }  
+        .legend-icon-letter {
+            color: whitesmoke;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .legend-description {
+            font-size: 14px;
+            left: 25px;
+            position: absolute;
+        }
+        
+        #right-panel {
+            background: #f6f8fc;
+            bottom: 0;
+            position: absolute;
+            right: 0;
+            top: 0px;
+            width: 310px;
+        }
+        #right-panel-top {
+            padding: 25px;
+        }
+        #right-panel-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        #right-panel-description {
+            font-weight: normal;
+            text-align: left;
+        }
+
+        #map-wrapper {
+            bottom: 0px;
+            height: 100%;
+            left: 250px;
+            position: absolute;
+            right: 310px;
+            top: 0px;
+            width: calc(100% - 250px - 310px);
+        }
+
+        .marker {
+            background: black; /* likely overwritten */
+            border: 2px solid white;
+            box-shadow: 0px 2px 4px rgba(0,0,0,.5);
+            color: whitesmoke;
+            height: 20px;
+            width: 20px;
+            z-index: 7;
+        }
+        .marker-garage {
+            border-radius: 50%;
+        }
+        .marker-lot {
+            border-radius: 3px;
+        }
+        .marker-inner {
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .marker:hover {
+            cursor: pointer;
+        }
+        .marker[data-price="great"] {
+            background: green;
+        }
+        .marker[data-price="great"]:hover {
+            border-color: lightgreen;
+        }
+        .marker[data-price="moderate"] {
+            background: gold;
+        }
+        .marker[data-price="moderate"]:hover {
+            border-color: lightgoldenrodyellow;
+        }        
+        .marker[data-price="higher"] {
+            background: red;
+        }
+        .marker[data-price="higher"]:hover {
+            border-color: red;
+        }
+        .marker[data-price="unknown"] {
+            background: black;
+        }
+        .marker[data-price="unknown"]:hover {
+            border-color: darkgray;
+        }        
+
+        footer {
+            background: #012647;
+            bottom: 0;
+            height: 100px;
+            left: 0;
+            position: absolute;
+            right: 0;
+        }
+    </style>
+    <script>
+        // #002648
+        // #058D22
+        // #FEB901
+        // #D21410
+        window.app = {
+            data: {
+
+            },
+            funcs: {
+                render_parking_options: function () {
+                    // if already loaded
+                    // if not loaded
+
+                }
+            },
+            state: {
+                filter: null, // "first_hour_free", "validation_accepted", or "consumer_rate_guarantee"
+                markers: {
+                    parking: null
+                }
+            }
+        };
+    </script>
+</head>
+<body id="app">
+    <header>
+        <div id="header-content">
+            <div id="header-content-left">
+                <img id="header-content-left-logo" src="./public/assets/logo.png">
+                <div id="header-content-left-title">
+                    <div id="header-content-left-title-upper">CHATTANOOGA</div>
+                    <div id="header-content-left-title-bottom">PARKING NETWORK: THIS WEBSITE IS A WORK IN PROGRESS</div>
+                </div>
+            </div>
+            <div id="header-content-right"></div>
+        </div>
+    </header>
+    <div id="middle">
+        <div id="left-panel" class="panel">
+            <div id="about">
+                <div id="about-h1">ABOUT THE MAP</div>
+                <div id="about-content">Explore parking across Downtown Chattanooga.  Hover over any parking location to see rates, fees, minimums and other details.</div>
+            </div>
+            <div id="price-guide">
+                <div id="price-guide-title"><span id="price-guide-title-main">PRICE GUIDE</span><span id="price-guide-title-sub">(hover to see details)</span></div>
+                <div class="price-guide-row">
+                    <div class="price-guide-row-left">
+                        <div class="price-guide-circle" id="price-guide-circle-great"></div>
+                    </div>
+                    <div class="price-guide-row-right">
+                        <div id="price-guide-row-title-great" class="price-guide-row-title">GREAT VALUE</div>
+                        <div class="price-guide-row-content">Best rates and/or better conditions</div>
+                    </div>
+                </div>
+                <div class="price-guide-row">
+                    <div class="price-guide-row-left">
+                        <div class="price-guide-circle" id="price-guide-circle-moderate"></div>
+                    </div>
+                    <div class="price-guide-row-right">
+                        <div id="price-guide-row-title-moderate" class="price-guide-row-title">MODERATE</div>
+                        <div class="price-guide-row-content">Standard rates and conditions</div>      
+                    </div>
+                </div>
+                <div class="price-guide-row">
+                    <div class="price-guide-row-left">
+                        <div class="price-guide-circle" id="price-guide-circle-higher-cost"></div>
+                    </div>
+                    <div class="price-guide-row-right">
+                        <div id="price-guide-row-title-higher-cost" class="price-guide-row-title">HIGHER COST</div>
+                        <div class="price-guide-row-content">Higher rates or fees and/or shorter free time</div>      
+                    </div>
+                </div>
+            </div>
+            <div id="legend">
+                <div id="legend-title">MAP LEGEND</div>
+                <div id="legend-content">
+                    <div class="legend-row">
+                        <div class="legend-icon-col"><div id="legend-icon-public-garage"><div class="legend-icon-letter">P</div></div></div>
+                        <div class="legend-description">Public Parking Garage</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-icon-col"><div id="legend-icon-public-lot"><div class="legend-icon-letter">P</div></div></div>
+                        <div class="legend-description">Public Parking Lot</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-icon-col"><div id="legend-icon-private-garage"><div class="legend-icon-letter">P</div></div></div>
+                        <div class="legend-description">Private Parking Garage</div>
+                    </div>
+                    <div class="legend-row">
+                        <div class="legend-icon-col"><div id="legend-icon-private-lot"><div class="legend-icon-letter">P</div></div></div>
+                        <div class="legend-description">Private Parking Lot</div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div id="map-wrapper">
+            <div id="map"></div>
+        </div>
+        <div id="right-panel" class="panel">
+            <div id="right-panel-top">
+                <div id="right-panel-title">EXPLORE PARKING OPTIONS</div>
+                <div id="right-panel-description">Click a button to highlight locations on the map.</div>
+            </div>
+        </div>
+    </div>
+    <footer></footer>
+    <script type="module">
+        import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.3.0/dist/maplibre-gl.mjs';
+
+        const protocol = new pmtiles.Protocol();
+        maplibregl.addProtocol('pmtiles', protocol.tile);
+
+        const PMTILES_URL = 'https://gocarta.s3.us-east-2.amazonaws.com/public/pmtiles/basemap.pmtiles';
+
+        const p = new pmtiles.PMTiles(PMTILES_URL);
+
+        protocol.add(p);
+
+        const map = new maplibregl.Map({
+            container: 'map',
+            zoom: 13.5,
+            center: [-85.3095658, 35.0449601],
+            style: "https://raw.githubusercontent.com/gocarta/basemap/refs/heads/main/carta.style.json"
+        });
+
+        // load static data
+        fetch("./public/data/data.json")
+            .then(function (response) { return response.json(); })
+            .then(function (json_data) {
+                console.log("json_data:", json_data);
+                app.data.parking_options = json_data;
+                console.log("set parking options");
+
+                const markers = [];
+                app.data.parking_options.forEach(function (opt) {
+                    const el = document.createElement('div');
+                    el.className = "marker";
+                    el.className += " " + (opt["Garage or Lot"] === "Garage" ? "marker-garage" : "marker-lot");
+                    el.className += " " + (opt["Public or Private"] === "Public" ? "marker-public" : "marker-private");
+
+                    if (opt["Price Guide"] === "GREAT VALUE") {
+                        el.setAttribute("data-price", "great");
+                    } else if (opt["Price Guide"] === "MODERATE") {
+                        el.setAttribute("data-price", "moderate");
+                    } else if (opt["Price Guide"] === "HIGHER COST") {
+                        el.setAttribute("data-price", "higher");
+                    } else {
+                        el.setAttribute("data-price", "unknown");
+                    }
+
+                    el.innerHTML = '<div class="marker-inner">P</div>';
+                    const description = ``;
+                    const popup = new maplibregl.Popup({offset: 25}).setHTML(description);
+                    const marker = new maplibregl.Marker( { element: el })
+                        .setLngLat([ opt.Longitude, opt.Latitude])
+                        .setPopup(popup)
+                        .addTo(map);
+                    markers.push(marker);                    
+                });
+                app.state.markers.parking = markers;
+
+                app.funcs.render_parking_options();
+            });
+
+    </script>
+</body>
+</html>
