@@ -32,6 +32,9 @@
         */
     </script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             bottom: 0;
             left: 0;
@@ -45,7 +48,7 @@
         header {
             /* background: red; */
             box-shadow: 0px 2px 4px rgba(0,0,0,.5);
-            height: 100px;
+            height: 50px;
             left: 0;
             position: absolute;
             right: 0;
@@ -54,7 +57,7 @@
         }
         #header-content {
             left: 25px;
-            height: 50px;
+            height: 40px;
             position: absolute;
             right: 25px;
             top: 50%;
@@ -63,14 +66,14 @@
         }
         #header-content-left {
             display: block;
-            height: 50px;
+            height: 40px;
             width: 75%;
         }
         #header-content-left-logo {
             display: inline-block;
-            height: 50px;
+            height: 40px;
             position: relative;
-            width: 50px;
+            width: 40px;
             vertical-align: middle;
         }
         #header-content-left-title {
@@ -82,33 +85,35 @@
         }
         #header-content-left-title-upper {
             color: #32393f;
-            font-size: 12pt;
+            font-size: 8pt;
         }
 
         #header-content-left-title-bottom {
             color: #001f45;
-            font-size: 24pt;
+            font-size: 16pt;
             font-weight: bold;
         }
         #about {
             background: #062945;
             box-sizing: border-box;
             color: #e9eced;
-            height: 200px;
-            padding: 25px;
+            height: 100px;
+            padding: 15px;
         }
         #about-h1 {
-            margin-bottom: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
         }
         #about-content {
-            line-height: 20px;
+            font-size: 8px;
         }
 
         #price-guide {
             background: white;
             border-bottom: 2px solid lightgray;
             box-sizing: border-box;
-            padding: 25px;
+            padding: 15px;
         }
         #price-guide-title {
             margin-bottom: 5px;
@@ -187,7 +192,7 @@
             bottom: 100px;
             left: 0;
             right: 0;
-            top: 100px;
+            top: 50px;
             position: absolute;
         }
 
@@ -202,7 +207,7 @@
             left: 0;
             position: absolute;
             top: 0;
-            width: 250px;
+            width: 150px;
         }
 
         #legend {
@@ -287,33 +292,41 @@
         
         #right-panel {
             background: #f6f8fc;
+            /* box-shadow: 3px 0 3px -1px rgba(0, 0, 0, 0.3); */
+            box-shadow: -1px 0 3px rgba(0, 0, 0, 0.3);
             bottom: 0;
+            height: calc(100vh - 50px - 50px);
             position: absolute;
             right: 0;
             top: 0px;
-            width: 310px;
+            width: 225px;
         }
         #right-panel-top {
-            padding: 25px;
+            padding: 15px;
         }
         #right-panel-title {
+            font-size: 12px;
             font-weight: bold;
             margin-bottom: 10px;
             text-align: left;
         }
         #right-panel-description {
+            font-size: 10px;
             font-weight: normal;
             text-align: left;
+        }
+        #parking-options-list {
+            padding: 5px;
         }
 
         #map-wrapper {
             bottom: 0px;
-            height: 100%;
-            left: 250px;
+            height: calc(100vh - 50px - 50px);
+            left: 150px;
             position: absolute;
-            right: 310px;
+            right: 150px;
             top: 0px;
-            width: calc(100% - 250px - 310px);
+            width: calc(100% - 150px - 200px);
         }
 
         .marker {
@@ -363,12 +376,90 @@
         }
         .marker[data-price="unknown"]:hover {
             border-color: darkgray;
+        }
+
+        .parking-options-card {
+            border: 1px solid gray;
+            border-radius: 5px;
+            box-sizing: border-box;
+            height: calc((100vh - 50px - 50px - 125px) / 3);
+            margin-bottom: 15px;
+            padding: 10px;
+        }
+        #parking-options-card-first-hour-free {
+            background: #ecf6eb;
+            border-color: green;
+        }
+        #parking-options-card-first-hour-free .parking-option-card-title {
+            color: green;
+        }
+        #parking-options-card-validation-accepted {
+            background: #fef7e4;
+            border-color: #fcb500;
+        }
+        #parking-options-card-validation-accepted .parking-option-card-title {
+            color: #fcb500;
+        }
+        #parking-options-card-consumer-rate-guarantee {
+            background: #ecf3fb;
+            border-color: #004bc8;
+        }
+        #parking-options-card-consumer-rate-guarantee .parking-option-card-title {
+            color: #004bc8;
         }        
+        .parking-option-card-content {
+            height: 100px;
+        }
+        .parking-option-card-image-wrapper {
+            height: 60px;
+            position: absolute;
+            width: 60px;
+        }
+        .parking-option-card-image {
+            height: 60px;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+        }
+        .parking-option-card-content-text {
+            left: 75px;
+            padding: 5px;
+            position: absolute;
+            width: calc(100% - 10px - 10px - 60px);
+        }
+        .parking-option-card-title {
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .parking-option-card-description {
+            font-size: 10px;
+            font-weight: normal;
+            line-height: 12px;
+        }
+        .parking-options-card-bottom {
+            height: 25px;
+        }
+        .parking-options-card-bottom-button {
+            background: #002f64;
+            border-radius: 5px;
+            color: whitesmoke;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: bold;;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .parking-options-card-bottom-button:hover {
+            transform: scale(1.05);
+        }
 
         footer {
             background: #012647;
             bottom: 0;
-            height: 100px;
+            height: 50px;
             left: 0;
             position: absolute;
             right: 0;
@@ -409,7 +500,7 @@
                 <img id="header-content-left-logo" src="./public/assets/logo.png">
                 <div id="header-content-left-title">
                     <div id="header-content-left-title-upper">CHATTANOOGA</div>
-                    <div id="header-content-left-title-bottom">PARKING NETWORK: THIS WEBSITE IS A WORK IN PROGRESS</div>
+                    <div id="header-content-left-title-bottom">PARKING NETWORK: DRAFT</div>
                 </div>
             </div>
             <div id="header-content-right"></div>
@@ -480,6 +571,50 @@
             <div id="right-panel-top">
                 <div id="right-panel-title">EXPLORE PARKING OPTIONS</div>
                 <div id="right-panel-description">Click a button to highlight locations on the map.</div>
+            </div>
+            <div id="parking-options-list">
+                <div id="parking-options-card-first-hour-free" class="parking-options-card">
+                    <div class="parking-option-card-content">
+                        <div class="parking-option-card-image-wrapper">
+                            <img class="parking-option-card-image" src="./public/assets/first-hour-free.png">
+                        </div>
+                        <div class="parking-option-card-content-text">
+                            <div class="parking-option-card-title">FIRST HOUR FREE</div>
+                            <div class="parking-option-card-description">Show all parking locations with the first hour free.</div>
+                        </div>
+                    </div>
+                    <div class="parking-options-card-bottom">
+                        <div class="parking-options-card-bottom-button" onclick="show_first_hour_free()">SHOW ON MAP</div>
+                    </div>
+                </div>
+                <div id="parking-options-card-validation-accepted" class="parking-options-card">
+                    <div class="parking-option-card-content">
+                        <div class="parking-option-card-image-wrapper">
+                            <img class="parking-option-card-image" src="./public/assets/validation-accepted.png">
+                        </div>
+                        <div class="parking-option-card-content-text">
+                            <div class="parking-option-card-title">VALIDATION ACCEPTED</div>
+                            <div class="parking-option-card-description">Show all parking locations where validation is allowed for free parking.</div>
+                        </div>
+                    </div>
+                    <div class="parking-options-card-bottom">
+                        <div class="parking-options-card-bottom-button" onclick="show_validation_accepted()">SHOW ON MAP</div>
+                    </div>
+                </div>  
+                <div id="parking-options-card-consumer-rate-guarantee" class="parking-options-card">
+                    <div class="parking-option-card-content">
+                        <div class="parking-option-card-image-wrapper">
+                            <img class="parking-option-card-image" src="./public/assets/consumer-rate-guarantee.png">
+                        </div>
+                        <div class="parking-option-card-content-text">
+                            <div class="parking-option-card-title">CONSUMER RATE GUARANTEE</div>
+                            <div class="parking-option-card-description">Show all Parking Network locations that meet the Consumer Rate Guarantee (regulated rates and fees).</div>
+                        </div>
+                    </div>
+                    <div class="parking-options-card-bottom">
+                        <div class="parking-options-card-bottom-button" onclick="show_consumer_rate_guarantee()">SHOW ON MAP</div>
+                    </div>
+                </div>                                        
             </div>
         </div>
     </div>
