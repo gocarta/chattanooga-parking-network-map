@@ -938,6 +938,17 @@
 
                 const markers = [];
                 app.data.parking_options.forEach(function (opt) {
+                    const parking_name = opt.Name.trim();
+
+                    const hourly_rate = opt["Hourly Rate"].trim().replace("$", "");
+
+                    if (hourly_rate === "") {
+                        console.log("skipping " + parking_name + " because we don't know the hourly rate");
+                        return;
+                    }
+
+                    const daily_max = opt["Daily Max"].trim().replace("$", "");
+
                     const point = [opt.Longitude, opt.Latitude];
                     const el = document.createElement('div');
                     el.className = "marker";
@@ -951,7 +962,7 @@
                         option_type = null;
                     }
 
-                    el.setAttribute("data-first-hour-free", [1, "1"].indexOf(opt["Free Hours"]) > -1);
+                    el.setAttribute("data-first-hour-free", ["yes", "Yes"].indexOf(opt["First Hour Free"]) > -1);
                     el.setAttribute("data-validation-accepted", ["yes", "true"].indexOf((opt["Validation Accepted"] || "").toLowerCase()) > -1);
                     console.log(opt);
                     el.setAttribute("data-consumer-rate-guarantee", ["yes", "true"].indexOf((opt["Consumer Rate Guarantee"] || "").toLowerCase()) > -1);
@@ -971,18 +982,18 @@
                     <div class="popup-parking">
                         <div class="popup-parking-top">
                             <img src="./public/assets/popup-logo.png">
-                            <div class="popup-parking-title">${opt.Name}</div>
+                            <div class="popup-parking-title">${parking_name}</div>
                         </div>
                         <div class="popup-price-guide" data-price-guide="${price_guide}">${opt["Price Guide"]}</div>
                         <div class="popup-parking-bottom">
                             <div>
-                                <span class="popup-parking-daily-rate">$${opt["Hourly Rate"]} / HR</span><div class="dot"></div>$${opt["Daily Max"]} DAILY MAX
+                                <span class="popup-parking-daily-rate">$${hourly_rate} / HR</span><div class="dot"></div>$${daily_max} DAILY MAX
                             </div>
-                            ${opt["Free Hours"] == 1 ? '<div class="first-hour-free">First Hour Free</div>' : ""}
+                            ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
                             ${opt["Minimum"] === 0 ? '<div class="no-minimum">No Minimum</div>' : ""}
                             ${opt["Fine"] ? `<div class="fine">$${opt["Fine"]} Fine</div>` : ""}
                             <div class="popup-parking-footer">
-                                ${option_type}<div class="dot"></div>${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `${opt["Spaces"]} Spaces` : ""}
+                                ${option_type}${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `<div class="dot"></div>${opt["Spaces"]} Spaces` : ""}
                             </div>
                         </div>
                     </div>
