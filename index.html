@@ -1037,7 +1037,7 @@
                         <div class="popup-price-guide" data-price-guide="${price_guide}">${opt["Price Guide"]}</div>
                         <div class="popup-parking-bottom">
                             <div>
-                                <span class="popup-parking-daily-rate">$${hourly_rate} / HR</span><div class="dot"></div>$${daily_max} DAILY MAX
+                                <span class="popup-parking-daily-rate">$${hourly_rate} / HR</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
                             </div>
                             ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
                             ${opt["Minimum"] === 0 ? '<div class="no-minimum">No Minimum</div>' : ""}
