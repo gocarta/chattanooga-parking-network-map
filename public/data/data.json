@@ -9,9 +9,9 @@
     "Price Guide": "??",
     "Free Hours": "??",
     "Minimum": "??",
-    "Hourly Rate": "??",
-    "Daily Max": "??",
-    "Ticket Fee": "??"
+    "Hourly Rate": "1.00",
+    "Daily Max": "10.00",
+    "Fine": "??"
   },
   {
     "Name": "CARTA Shuttle Park North",
@@ -23,9 +23,9 @@
     "Price Guide": "GREAT VALUE",
     "Free Hours": 1,
     "Minimum": 0,
-    "Hourly Rate": "N/A",
-    "Daily Max": "N/A",
-    "Ticket Fee": "N/A"
+    "Hourly Rate": "2.00",
+    "Daily Max": "10.00",
+    "Fine": "N/A"
   },
   {
     "Name": "CARTA Shuttle Park South",
@@ -37,9 +37,10 @@
     "Price Guide": "GREAT VALUE",
     "Free Hours": 1,
     "Minimum": 0,
-    "Hourly Rate": "N/A",
-    "Daily Max": "N/A",
-    "Ticket Fee": "N/A"
+    "Hourly Rate": "1.25",
+    "Daily Max": "10.00",
+    "Fine": "11",
+    "Spaces": 471
   },
   {
     "Name": "River Pier Garage",
@@ -51,9 +52,9 @@
     "Price Guide": "???",
     "Free Hours": 0,
     "Minimum": 0,
-    "Hourly Rate": "N/A",
+    "Hourly Rate": "3.50",
     "Daily Max": "N/A",
-    "Ticket Fee": "N/A"
+    "Fine": "N/A"
   },
   {
     "Name": "Republic Parking at Warehouse Row",
@@ -65,9 +66,9 @@
     "Price Guide": "???",
     "Free Hours": "??",
     "Minimum": "??",
-    "Hourly Rate": "??",
+    "Hourly Rate": "1.52",
     "Daily Max": "??",
-    "Ticket Fee": "??"
+    "Fine": "??"
   },
   {
     "Name": "Omega Parking",
@@ -79,9 +80,9 @@
     "Price Guide": "???",
     "Free Hours": "??",
     "Minimum": "??",
-    "Hourly Rate": "??",
+    "Hourly Rate": "8.21",
     "Daily Max": "??",
-    "Ticket Fee": "??"
+    "Fine": "??"
   },
   {
     "Name": "EPB Garage",
@@ -95,7 +96,7 @@
     "Minimum": "??",
     "Hourly Rate": "??",
     "Daily Max": "??",
-    "Ticket Fee": "??"
+    "Fine": "??"
   },
   {
     "Name": "Citipark Garage",
@@ -109,6 +110,6 @@
     "Minimum": "??",
     "Hourly Rate": "??",
     "Daily Max": "??",
-    "Ticket Fee": "??"
+    "Fine": "??"
   }
 ]

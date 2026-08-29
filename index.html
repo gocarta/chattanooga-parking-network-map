@@ -27,6 +27,7 @@
     <script>
         /*
             z-index:
+            11 - map popup
             10 - header
             9 - left panel right panel
         */
@@ -43,7 +44,19 @@
             right: 0;
             top: 0;
         }
+
         html, body, #map { height: 100%; }
+
+        .maplibregl-popup {
+            background: none;
+            max-width: fit-content !important;
+            z-index: 11;
+        }
+
+        .maplibregl-popup-content {
+            background: none;
+            padding: 0;
+        }
 
         header {
             /* background: red; */
@@ -120,17 +133,17 @@
         }
         #price-guide-title-main {
             color: #050d25;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
         }
         #price-guide-title-sub {
             color: #5a5958;
-            font-size: 10px;
+            font-size: 8px;
             font-weight: normal;
             margin-left: 4px;
         }
         .price-guide-row {
-            height: 75px;
+            height: 50px;
             margin-top: 10px;
             position: relative;
         }
@@ -154,6 +167,9 @@
         #price-guide-circle-higher-cost {
             background: #d1120f;
         }
+        .price-guide-row-title {
+            font-size: 12px;
+        }
         #price-guide-row-title-great {
             color: #048e23;
             font-weight: bold;
@@ -172,6 +188,13 @@
             padding-left: 5px;
             position: absolute;
             width: 150px;
+        }
+        .price-guide-row-content {
+            font-size: 10px;
+        }
+        .first-hour-free {
+            color: #048e23;
+            font-weight: bold;
         }
 
         #header-content-right {
@@ -204,10 +227,11 @@
             background: white;
             bottom: 0;
             box-shadow: 3px 0 3px -1px rgba(0, 0, 0, 0.3);
+            height: calc(100vh - 50px - 50px);
             left: 0;
             position: absolute;
             top: 0;
-            width: 150px;
+            width: 200px;
         }
 
         #legend {
@@ -218,6 +242,7 @@
         }
         #legend-title {
             color: #070b21;
+            font-size: 12px;
         }
         .legend-row {
             display: block;
@@ -285,7 +310,7 @@
             transform: translate(-50%, -50%);
         }
         .legend-description {
-            font-size: 14px;
+            font-size: 10px;
             left: 25px;
             position: absolute;
         }
@@ -326,7 +351,7 @@
             position: absolute;
             right: 150px;
             top: 0px;
-            width: calc(100% - 150px - 200px);
+            width: calc(100% - 150px - 225px);
         }
 
         .marker {
@@ -354,7 +379,7 @@
             cursor: pointer;
         }
         .marker[data-price="great"] {
-            background: green;
+            background: #048e23;
         }
         .marker[data-price="great"]:hover {
             border-color: lightgreen;
@@ -366,10 +391,10 @@
             border-color: lightgoldenrodyellow;
         }        
         .marker[data-price="higher"] {
-            background: red;
+            background: #d1120f;
         }
         .marker[data-price="higher"]:hover {
-            border-color: red;
+            border-color: #d1120f;
         }
         .marker[data-price="unknown"] {
             background: black;
@@ -456,14 +481,162 @@
             transform: scale(1.05);
         }
 
+        .popup-parking-title {
+            color: whitesmoke;
+        }
+        .popup-parking-top {
+            background: black;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            margin: 0;
+            padding-bottom: 5px;
+            padding-top: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            text-align: center;
+        }
+        .popup-parking-top img, .popup-parking-top div {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .popup-parking-top div {
+            font-weight: bold;
+        }
+
+        .popup-price-guide {
+            color: whitesmoke;
+            padding-bottom: 1px;
+            padding-left: 10px;
+            padding-top: 1px;
+        }
+        .popup-price-guide[data-price-guide="great"] {
+            background: #048e23;
+        }
+        .popup-price-guide[data-price-guide="moderate"] {
+            background: #feba02;
+        }
+        .popup-price-guide[data-price-guide="higher"] {
+            background: #d1120f;
+        }        
+        .popup-price-guide[data-price-guide="unknown"] {
+            background: gray;
+        }
+
+        .popup-parking-bottom {
+            background: white;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            padding: 10px;
+        }
+        .popup-parking-daily-rate {
+            font-weight: bold;
+        }
+        .popup-parking .dot {
+            background: black;
+            border-radius: 50%;
+            display: inline-block;
+            height: 3px;
+            margin-left: 5px;
+            margin-right: 5px;
+            position: relative;
+            vertical-align: middle;
+            width: 3px;
+        }
+
         footer {
             background: #012647;
             bottom: 0;
+            color: lightgrey;
             height: 50px;
             left: 0;
             position: absolute;
             right: 0;
         }
+
+        footer ul {
+            height: 40px;
+            left: 20px;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+
+        footer ul li {
+            display: inline-block;
+            height: 40px;
+            position: relative;
+            vertical-align: top;
+        }
+
+        footer ul li:not(:first-child) {
+            border-left: 1px solid lightgrey;
+        }
+
+        .footer-image-wrapper {
+            display: inline-block;
+            height: 100%;
+            margin-left: 15px;
+            position: relative;
+            width: 30px;
+        }
+
+        .footer-image-wrapper img {
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+        }
+
+        .footer-text-wrapper {
+            display: inline-block;
+            margin-left: 15px;
+            margin-right: 15px;
+            position: relative;
+            vertical-align: top;
+        }
+
+        .footer-text-heading {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .footer-text-description {
+            font-size: 10px;
+            font-weight: normal;
+        }
+
+        .footer-text-description a {
+            color: lightgray;
+            text-decoration: none;
+        }
+        .footer-text-description a:hover {
+            text-decoration: underline;
+        }
+
+        .popup-parking-footer {
+            font-size: 10px;
+            color: gray; 
+            margin-top: 5px;
+        }
+        .popup-parking-footer .dot {
+            background: gray;
+        }
+
+        @media screen and (max-width: 1280.5px) {
+            footer li {
+                width: 22.5%
+            }
+        }
+        @media screen and (min-width: 1280.5px) {
+            footer li {
+                width: 20%
+            }
+        }        
     </style>
     <script>
         // #002648
@@ -618,7 +791,38 @@
             </div>
         </div>
     </div>
-    <footer></footer>
+    <footer>
+        <ul>
+            <li>
+                <div class="footer-image-wrapper"><img src="./public/assets/fair-rates.png"></div>
+                <div class="footer-text-wrapper">
+                    <div class="footer-text-heading">FAIR RATES</div>
+                    <div class="footer-text-description">Regulated rates.</br>No surprises.</div>
+                </div>
+            </li>
+            <li>
+                <div class="footer-image-wrapper"><img src="./public/assets/consumer-protection.png"></div>
+                <div class="footer-text-wrapper">
+                    <div class="footer-text-heading">CONSUMER PROTECTION</div>
+                    <div class="footer-text-description">Your rights. Clear rules.</br>Local oversight.</div>
+                </div>
+            </li>
+            <li>
+                <div class="footer-image-wrapper"><img src="./public/assets/responsible-parking.png"></div>
+                <div class="footer-text-wrapper">
+                    <div class="footer-text-heading">RESPONSIBLE PARKING</div>
+                    <div class="footer-text-description">Park smart. Follow the rules.</br>Help keep downtown moving.</div>
+                </div>
+            </li>
+            <li>
+                <div class="footer-image-wrapper"><img src="./public/assets/learn-more.png"></div>
+                <div class="footer-text-wrapper">
+                    <div class="footer-text-heading">LEARN MORE</div>
+                    <div class="footer-text-description"><a href="https://chattanoogaparking.org">https://chattanoogaparking.org</a></div>
+                </div>
+            </li>            
+        </ul>
+    </footer>
     <script type="module">
         import * as maplibregl from 'https://unpkg.com/maplibre-gl@6.3.0/dist/maplibre-gl.mjs';
 
@@ -646,31 +850,64 @@
                 app.data.parking_options = json_data;
                 console.log("set parking options");
 
+                const popup = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 25});
+
                 const markers = [];
                 app.data.parking_options.forEach(function (opt) {
+                    const point = [opt.Longitude, opt.Latitude];
                     const el = document.createElement('div');
                     el.className = "marker";
                     el.className += " " + (opt["Garage or Lot"] === "Garage" ? "marker-garage" : "marker-lot");
                     el.className += " " + (opt["Public or Private"] === "Public" ? "marker-public" : "marker-private");
 
-                    if (opt["Price Guide"] === "GREAT VALUE") {
-                        el.setAttribute("data-price", "great");
-                    } else if (opt["Price Guide"] === "MODERATE") {
-                        el.setAttribute("data-price", "moderate");
-                    } else if (opt["Price Guide"] === "HIGHER COST") {
-                        el.setAttribute("data-price", "higher");
-                    } else {
-                        el.setAttribute("data-price", "unknown");
+
+                    const option_type = opt["Public or Private"] + " " + opt["Garage or Lot"];
+                    if (["Public Garage", "Public Lot", "Private Garage", "Private Lot"].indexOf(option_type) === -1) {
+                        console.error("invalid option type");
+                        option_type = null;
                     }
 
+                    let price_guide = "unknown";
+                    if (opt["Price Guide"] === "GREAT VALUE") {
+                        price_guide = "great"
+                    } else if (opt["Price Guide"] === "MODERATE") {
+                        price_guide = "moderate";
+                    } else if (opt["Price Guide"] === "HIGHER COST") {
+                        price_guide = "higher"
+                    }
+                    el.setAttribute("data-price", price_guide);
+
                     el.innerHTML = '<div class="marker-inner">P</div>';
-                    const description = ``;
-                    const popup = new maplibregl.Popup({offset: 25}).setHTML(description);
-                    const marker = new maplibregl.Marker( { element: el })
-                        .setLngLat([ opt.Longitude, opt.Latitude])
-                        .setPopup(popup)
-                        .addTo(map);
-                    markers.push(marker);                    
+                    const description = `
+                    <div class="popup-parking">
+                        <div class="popup-parking-top">
+                            <img src="./public/assets/popup-logo.png">
+                            <div class="popup-parking-title">${opt.Name}</div>
+                        </div>
+                        <div class="popup-price-guide" data-price-guide="${price_guide}">${opt["Price Guide"]}</div>
+                        <div class="popup-parking-bottom">
+                            <div>
+                                <span class="popup-parking-daily-rate">$${opt["Hourly Rate"]} / HR</span><div class="dot"></div>$${opt["Daily Max"]} DAILY MAX
+                            </div>
+                            ${opt["Free Hours"] == 1 ? '<div class="first-hour-free">First Hour Free</div>' : ""}
+                            ${opt["Minimum"] === 0 ? '<div class="no-minimum">No Minimum</div>' : ""}
+                            ${opt["Fine"] ? `<div class="fine">$${opt["Fine"]} Fine</div>` : ""}
+                            <div class="popup-parking-footer">
+                                ${option_type}<div class="dot"></div>${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `${opt["Spaces"]} Spaces` : ""}
+                            </div>
+                        </div>
+                    </div>
+                    `;
+
+                    // Show popup on hover
+                    el.addEventListener('mouseenter', () => {
+                        popup.setHTML(description).addTo(map).setLngLat(point);
+                    });
+                    // Hide popup when mouse leaves
+                    // el.addEventListener('mouseleave', () => popup.remove());
+
+                    const marker = new maplibregl.Marker( { element: el }).setLngLat(point).addTo(map);
+                    markers.push(marker);             
                 });
                 app.state.markers.parking = markers;
 
