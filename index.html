@@ -27,6 +27,7 @@
     <script>
         /*
             z-index:
+            12 - map overlay
             11 - map popup
             10 - header
             9 - left panel right panel
@@ -47,10 +48,26 @@
 
         html, body, #map { height: 100%; }
 
+        #map-overlay {
+            background: black;
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            opacity: 0.5;
+            pointer-events: none;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 12;
+        }
+        #app[data-map-filter="null"] #map-overlay {
+            display: none;
+        }
+
         .maplibregl-popup {
             background: none;
             max-width: fit-content !important;
-            z-index: 11;
+            z-index: 13;
         }
 
         .maplibregl-popup-content {
@@ -347,11 +364,11 @@
         #map-wrapper {
             bottom: 0px;
             height: calc(100vh - 50px - 50px);
-            left: 150px;
+            left: 200px;
             position: absolute;
             right: 150px;
             top: 0px;
-            width: calc(100% - 150px - 225px);
+            width: calc(100% - 200px - 225px);
         }
 
         .marker {
@@ -401,6 +418,16 @@
         }
         .marker[data-price="unknown"]:hover {
             border-color: darkgray;
+        }
+
+        #app[data-map-filter="first_hour_free"] .marker[data-first-hour-free="true"] {
+            z-index: 14;
+        }
+        #app[data-map-filter="validation_accepted"] .marker[data-validation-accepted="true"] {
+            z-index: 14;
+        }
+        #app[data-map-filter="consumer_rate_guarantee"] .marker[data-consumer-rate-guarantee="true"] {
+            z-index: 14;
         }
 
         .parking-options-card {
@@ -479,6 +506,40 @@
         }
         .parking-options-card-bottom-button:hover {
             transform: scale(1.05);
+        }
+        .parking-options-card-bottom-button-reset {
+            background: lightgray;
+            border-radius: 5px;
+            color: black;
+            cursor: pointer;
+            display: none;
+            font-size: 10px;
+            font-weight: bold;;
+            padding: 5px 10px;
+            text-align: center;
+        }
+        .parking-options-card-bottom-button-reset:hover {
+            transform: scale(1.05);
+        }
+        #app[data-map-filter=first_hour_free] #parking-options-card-first-hour-free .parking-options-card-bottom-button {
+            display: none;
+        }
+        #app[data-map-filter=first_hour_free] #parking-options-card-first-hour-free .parking-options-card-bottom-button-reset {
+            display: block;
+        }
+
+        #app[data-map-filter=validation_accepted] #parking-options-card-validation-accepted .parking-options-card-bottom-button {
+            display: none;
+        }
+        #app[data-map-filter=validation_accepted] #parking-options-card-validation-accepted .parking-options-card-bottom-button-reset {
+            display: block;
+        }
+
+        #app[data-map-filter=consumer_rate_guarantee] #parking-options-card-consumer-rate-guarantee .parking-options-card-bottom-button {
+            display: none;
+        }
+        #app[data-map-filter=consumer_rate_guarantee] #parking-options-card-consumer-rate-guarantee .parking-options-card-bottom-button-reset {
+            display: block;
         }
 
         .popup-parking-title {
@@ -655,6 +716,25 @@
                 },
                 render_shuttle_routes: function () {
 
+                },
+                serialize_filter: function () {
+                    document.getElementById("app").setAttribute("data-map-filter", app.state.filter);
+                },
+                show_first_hour_free: function () {
+                    console.log("showing first hour free");
+                    document.getElementById("app").setAttribute("data-map-filter", "first_hour_free");
+                },
+                show_validation_accepted: function () {
+                    console.log("showing validation accepted");
+                    document.getElementById("app").setAttribute("data-map-filter", "validation_accepted");
+                },
+                show_consumer_rate_guarantee: function () {
+                    console.log("showing consumer rate guarantee");
+                    document.getElementById("app").setAttribute("data-map-filter", "consumer_rate_guarantee");
+                },
+                reset_map_filter: function () {
+                    console.log("resetting map filter");
+                    document.getElementById("app").setAttribute("data-map-filter", "null");                    
                 }
             },
             state: {
@@ -666,14 +746,14 @@
         };
     </script>
 </head>
-<body id="app">
+<body id="app" data-map-filter="null">
     <header>
         <div id="header-content">
             <div id="header-content-left">
                 <img id="header-content-left-logo" src="./public/assets/logo.png">
                 <div id="header-content-left-title">
                     <div id="header-content-left-title-upper">CHATTANOOGA</div>
-                    <div id="header-content-left-title-bottom">PARKING NETWORK: DRAFT</div>
+                    <div id="header-content-left-title-bottom">PARKING NETWORK: DRAFT (USING TEST DATA)</div>
                 </div>
             </div>
             <div id="header-content-right"></div>
@@ -738,6 +818,7 @@
             </div>
         </div>
         <div id="map-wrapper">
+            <div id="map-overlay"></div>
             <div id="map"></div>
         </div>
         <div id="right-panel" class="panel">
@@ -757,7 +838,8 @@
                         </div>
                     </div>
                     <div class="parking-options-card-bottom">
-                        <div class="parking-options-card-bottom-button" onclick="show_first_hour_free()">SHOW ON MAP</div>
+                        <div class="parking-options-card-bottom-button" onclick="app.funcs.show_first_hour_free()">SHOW ON MAP</div>
+                        <div class="parking-options-card-bottom-button-reset" onclick="app.funcs.reset_map_filter()">RESET MAP</div>
                     </div>
                 </div>
                 <div id="parking-options-card-validation-accepted" class="parking-options-card">
@@ -771,7 +853,8 @@
                         </div>
                     </div>
                     <div class="parking-options-card-bottom">
-                        <div class="parking-options-card-bottom-button" onclick="show_validation_accepted()">SHOW ON MAP</div>
+                        <div class="parking-options-card-bottom-button" onclick="app.funcs.show_validation_accepted()">SHOW ON MAP</div>
+                        <div class="parking-options-card-bottom-button-reset" onclick="app.funcs.reset_map_filter()">RESET MAP</div>
                     </div>
                 </div>  
                 <div id="parking-options-card-consumer-rate-guarantee" class="parking-options-card">
@@ -785,9 +868,10 @@
                         </div>
                     </div>
                     <div class="parking-options-card-bottom">
-                        <div class="parking-options-card-bottom-button" onclick="show_consumer_rate_guarantee()">SHOW ON MAP</div>
+                        <div class="parking-options-card-bottom-button" onclick="app.funcs.show_consumer_rate_guarantee()">SHOW ON MAP</div>
+                        <div class="parking-options-card-bottom-button-reset" onclick="app.funcs.reset_map_filter()">RESET MAP</div>
                     </div>
-                </div>                                        
+                </div>
             </div>
         </div>
     </div>
@@ -861,11 +945,16 @@
                     el.className += " " + (opt["Public or Private"] === "Public" ? "marker-public" : "marker-private");
 
 
-                    const option_type = opt["Public or Private"] + " " + opt["Garage or Lot"];
+                    let option_type = opt["Public or Private"] + " " + opt["Garage or Lot"];
                     if (["Public Garage", "Public Lot", "Private Garage", "Private Lot"].indexOf(option_type) === -1) {
                         console.error("invalid option type");
                         option_type = null;
                     }
+
+                    el.setAttribute("data-first-hour-free", [1, "1"].indexOf(opt["Free Hours"]) > -1);
+                    el.setAttribute("data-validation-accepted", ["yes", "true"].indexOf((opt["Validation Accepted"] || "").toLowerCase()) > -1);
+                    console.log(opt);
+                    el.setAttribute("data-consumer-rate-guarantee", ["yes", "true"].indexOf((opt["Consumer Rate Guarantee"] || "").toLowerCase()) > -1);
 
                     let price_guide = "unknown";
                     if (opt["Price Guide"] === "GREAT VALUE") {
@@ -904,7 +993,7 @@
                         popup.setHTML(description).addTo(map).setLngLat(point);
                     });
                     // Hide popup when mouse leaves
-                    // el.addEventListener('mouseleave', () => popup.remove());
+                    el.addEventListener('mouseleave', () => popup.remove());
 
                     const marker = new maplibregl.Marker( { element: el }).setLngLat(point).addTo(map);
                     markers.push(marker);             

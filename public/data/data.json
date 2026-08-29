@@ -11,7 +11,8 @@
     "Minimum": "??",
     "Hourly Rate": "1.00",
     "Daily Max": "10.00",
-    "Fine": "??"
+    "Fine": "??",
+    "Consumer Rate Guarantee": "Yes"
   },
   {
     "Name": "CARTA Shuttle Park North",
@@ -25,7 +26,8 @@
     "Minimum": 0,
     "Hourly Rate": "2.00",
     "Daily Max": "10.00",
-    "Fine": "N/A"
+    "Fine": "N/A",
+    "Consumer Rate Guarantee": "Yes"
   },
   {
     "Name": "CARTA Shuttle Park South",
@@ -40,7 +42,9 @@
     "Hourly Rate": "1.25",
     "Daily Max": "10.00",
     "Fine": "11",
-    "Spaces": 471
+    "Spaces": 471,
+    "Validation": "Yes",
+    "Consumer Rate Guarantee": "Yes"
   },
   {
     "Name": "River Pier Garage",
@@ -54,7 +58,8 @@
     "Minimum": 0,
     "Hourly Rate": "3.50",
     "Daily Max": "N/A",
-    "Fine": "N/A"
+    "Fine": "N/A",
+    "Consumer Rate Guarantee": "Yes"
   },
   {
     "Name": "Republic Parking at Warehouse Row",
@@ -68,7 +73,8 @@
     "Minimum": "??",
     "Hourly Rate": "1.52",
     "Daily Max": "??",
-    "Fine": "??"
+    "Fine": "??",
+    "Consumer Rate Guarantee": "No"
   },
   {
     "Name": "Omega Parking",
