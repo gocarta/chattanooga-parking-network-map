@@ -3,7 +3,7 @@ PROOF OF CONCEPT
 
 ## live
 You can view the live application here:  
-https://gocarta.github.io/chattanooga-parking-network-map/
+https://map.chattanoogaparking.net/
 
 ## data dependencies
 This application uses the following external data sources:
