@@ -27,10 +27,13 @@
     <script>
         /*
             z-index:
+            14 - map popup
+            13 - filtered marker
             12 - map overlay
-            11 - map popup
+            11 - 
             10 - header
-            9 - left panel right panel
+            9 - left panel and right panel
+            7 - marker
         */
     </script>
     <style>
@@ -67,7 +70,7 @@
         .maplibregl-popup {
             background: none;
             max-width: fit-content !important;
-            z-index: 13;
+            z-index: 14;
         }
 
         .maplibregl-popup-content {
@@ -281,7 +284,7 @@
             margin: 0;
             width: 20px;
         }
-        #legend-icon-public-garage {
+        #legend-icon-garage {
             background: radial-gradient(circle at 5px 5px, #5cabff, #000);
             border-radius: 50%;
             color: whitesmoke;
@@ -290,7 +293,7 @@
             margin: 0;
             width: 20px;          
         }
-        #legend-icon-public-lot {
+        #legend-icon-lot {
             background: radial-gradient(circle at 1px 1px, #5cabff, #0763a8);
             border-radius: 2px;
             box-shadow: 2px 1px 1px lightgrays;            
@@ -300,25 +303,6 @@
             margin: 0;
             width: 20px;          
         }
-        #legend-icon-private-garage {
-            background: radial-gradient(circle at 5px 5px, #1a3048, #000);
-            border-radius: 50%;
-            color: whitesmoke;
-            display: block;
-            height: 20px;
-            margin: 0;
-            width: 20px;          
-        }
-        #legend-icon-private-lot {
-            background: radial-gradient(circle at 1px 1px, #1a3048, #000);
-            border-radius: 2px;
-            box-shadow: 2px 1px 1px lightgrays;            
-            color: whitesmoke;
-            display: block;
-            height: 20px;
-            margin: 0;
-            width: 20px;          
-        }  
         .legend-icon-letter {
             color: whitesmoke;
             left: 50%;
@@ -440,13 +424,13 @@
         }
 
         #app[data-map-filter="first_hour_free"] .marker[data-first-hour-free="true"] {
-            z-index: 14;
+            z-index: 13;
         }
         #app[data-map-filter="validation_accepted"] .marker[data-validation-accepted="true"] {
-            z-index: 14;
+            z-index: 13;
         }
         #app[data-map-filter="consumer_rate_guarantee"] .marker[data-consumer-rate-guarantee="true"] {
-            z-index: 14;
+            z-index: 13;
         }
 
         .parking-options-card {
@@ -846,20 +830,12 @@
                 <div id="legend-title">MAP LEGEND</div>
                 <div id="legend-content">
                     <div class="legend-row">
-                        <div class="legend-icon-col"><div id="legend-icon-public-garage"><div class="legend-icon-letter">P</div></div></div>
-                        <div class="legend-description">Public Parking Garage</div>
+                        <div class="legend-icon-col"><div id="legend-icon-garage"><div class="legend-icon-letter">P</div></div></div>
+                        <div class="legend-description">Parking Garage</div>
                     </div>
                     <div class="legend-row">
-                        <div class="legend-icon-col"><div id="legend-icon-public-lot"><div class="legend-icon-letter">P</div></div></div>
-                        <div class="legend-description">Public Parking Lot</div>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-icon-col"><div id="legend-icon-private-garage"><div class="legend-icon-letter">P</div></div></div>
-                        <div class="legend-description">Private Parking Garage</div>
-                    </div>
-                    <div class="legend-row">
-                        <div class="legend-icon-col"><div id="legend-icon-private-lot"><div class="legend-icon-letter">P</div></div></div>
-                        <div class="legend-description">Private Parking Lot</div>
+                        <div class="legend-icon-col"><div id="legend-icon-lot"><div class="legend-icon-letter">P</div></div></div>
+                        <div class="legend-description">Parking Lot</div>
                     </div>
                     <div class="legend-row">
                         <div class="legend-icon-col"><img src="./public/assets/shuttle.png"></div>
@@ -1005,6 +981,8 @@
 
                     const daily_max = opt["Daily Max"].trim().replace("$", "");
 
+                    const fine = opt["Fine"].trim().replace("$", "");
+
                     const point = [opt.Longitude, opt.Latitude];
                     const el = document.createElement('div');
                     el.className = "marker";
@@ -1012,15 +990,23 @@
                     el.className += " " + (opt["Public or Private"] === "Public" ? "marker-public" : "marker-private");
 
 
-                    let option_type = opt["Public or Private"] + " " + opt["Garage or Lot"];
-                    if (["Public Garage", "Public Lot", "Private Garage", "Private Lot"].indexOf(option_type) === -1) {
+                    let public_or_private = opt["Public or Private"];
+                    if (["Public", "Private"].indexOf(public_or_private) === -1) {
+                        public_or_private = "";
+                    }
+                    let garage_or_lot = opt["Garage or Lot"];
+                    if (["Garage", "Lot"].indexOf(garage_or_lot) === -1) {
+                        garage_or_lot = "";
+                    }
+
+                    let option_type = [public_or_private, garage_or_lot].filter(Boolean).join(" ");
+                    if (["Public Garage", "Public Lot", "Private Garage", "Private Lot", "Lot", "Garage"].indexOf(option_type) === -1) {
                         console.error("invalid option type");
                         option_type = null;
                     }
 
                     el.setAttribute("data-first-hour-free", ["yes", "Yes"].indexOf(opt["First Hour Free"]) > -1);
                     el.setAttribute("data-validation-accepted", ["yes", "true"].indexOf((opt["Validation Accepted"] || "").toLowerCase()) > -1);
-                    console.log(opt);
                     el.setAttribute("data-consumer-rate-guarantee", ["yes", "true"].indexOf((opt["Consumer Rate Guarantee"] || "").toLowerCase()) > -1);
 
                     let price_guide = "unknown";
@@ -1034,20 +1020,30 @@
                     el.setAttribute("data-price", price_guide);
 
                     el.innerHTML = '<div class="marker-inner">P</div>';
+
+                    let popup_logo = "./public/assets/popup-logo.png";
+                    if (opt["Operator"] === "CARTA") {
+                        popup_logo = "./public/assets/chattanooga-parking-network.png";
+                    } else if (opt["Operator"] === "Brightbase") {
+                        popup_logo = "./public/assets/brightbase.png";
+                    } else if (opt["Operator"] === "Republic") {
+                        popup_logo = "./public/assets/republic.png";
+                    }
+
                     const description = `
                     <div class="popup-parking">
                         <div class="popup-parking-top">
-                            <img src="./public/assets/popup-logo.png">
+                            <img src="${popup_logo}">
                             <div class="popup-parking-title">${parking_name}</div>
                         </div>
                         <div class="popup-price-guide" data-price-guide="${price_guide}">${opt["Price Guide"]}</div>
                         <div class="popup-parking-bottom">
                             <div>
-                                <span class="popup-parking-daily-rate">$${hourly_rate} / HR</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
+                                <span class="popup-parking-daily-rate">${hourly_rate.length > 10 ? hourly_rate :  "$" + hourly_rate + " / HR"}</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
                             </div>
                             ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
-                            ${opt["Minimum"] === 0 ? '<div class="no-minimum">No Minimum</div>' : ""}
-                            ${opt["Fine"] ? `<div class="fine">$${opt["Fine"]} Fine</div>` : ""}
+                            ${[0, "No"].indexOf(opt["Minimum"]) > -1 ? '<div class="no-minimum">No Minimum</div>' : opt["Minimum"] != "" ? `<div class="minimum">${opt["Minimum"]} Minimum</div>` : ""}
+                            ${["", "N/A"].indexOf(fine) === -1 ? `<div class="fine">$${fine} Fine</div>` : ""}
                             <div class="popup-parking-footer">
                                 ${option_type}${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `<div class="dot"></div>${opt["Spaces"]} Spaces` : ""}
                             </div>
@@ -1197,7 +1193,7 @@
                                     }
                                 });
 
-                        }, 1 * 1000);
+                        }, 500);
                     });
             })();
         });
