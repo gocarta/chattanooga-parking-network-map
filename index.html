@@ -26,6 +26,10 @@
     </style>
 
     <style id="maplibgre-geocoder-overrides">
+        .maplibregl-ctrl-top-left {
+            z-index: 8;
+        }
+
         .maplibregl-ctrl-top-left .maplibregl-ctrl {
             max-width: calc(100% - 75px);
         }
@@ -48,12 +52,14 @@
     <script>
         /*
             z-index:
+            15 - search suggestions
             14 - map popup
             13 - filtered marker
             12 - map overlay
             11 - 
             10 - header
             9 - left panel and right panel
+            8 - .maplibregl-ctrl-top-left - geocoder suggestions
             7 - marker
         */
     </script>
@@ -1147,11 +1153,11 @@
                     el.setAttribute("data-consumer-rate-guarantee", ["yes", "true"].indexOf((opt["Consumer Rate Guarantee"] || "").toLowerCase()) > -1);
 
                     let price_guide = "unknown";
-                    if (opt["Price Guide"] === "GREAT VALUE") {
+                    if ((opt["Price Guide"] || "").toUpperCase() === "GREAT VALUE") {
                         price_guide = "great"
-                    } else if (opt["Price Guide"] === "MODERATE") {
+                    } else if ((opt["Price Guide"] || "").toUpperCase() === "MODERATE") {
                         price_guide = "moderate";
-                    } else if (opt["Price Guide"] === "HIGHER") {
+                    } else if ((opt["Price Guide"] || "").toUpperCase() === "HIGHER") {
                         price_guide = "higher"
                     }
                     el.setAttribute("data-price", price_guide);
