@@ -861,6 +861,34 @@
             });
         })();
 
+        (async function load_pois () {
+            const url = "https://gocarta.s3.us-east-2.amazonaws.com/public/data/osm_pois/v1/data.tsv";
+            const rows = await load_tsv(url);
+            console.log("pois:", rows);
+            const pois = [];
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row.name) continue;
+                const poi = {
+                    type: "poi",
+                    name: row.name,
+                    latitude: Number(row["@lat"]),
+                    longitude: Number(row["@lon"])
+                };
+
+                if (row["addr:housenumber"]) {
+                    poi.address = row["addr:housenumber"] + " " + row["addr:street"] + ", " + row["addr:city"] + ", " + row["addr:state"] + " " + row["addr:postcode"];
+                } else {
+                    poi.address = null;
+                }
+
+                poi.lookup = poi.name.toLowerCase() + (poi.address ? " " + poi.address.toLowerCase() : "");
+
+                pois.push(poi);
+            }
+            app.data.pois = pois;
+        })();
+
         (async function load_validators () {
             const url = "./public/data/validators.json";
             const response = await fetch(url);
@@ -1098,6 +1126,40 @@
                                 }
                             } catch (err) {
                                 console.error(validator);
+                                throw err;
+                            }
+                        }
+                    }
+
+                    if (app.data.pois) {
+                        for (let i = 0; i < app.data.pois.length; i++) {
+                            const poi = app.data.pois[i];
+                            try {
+                                if (!poi) continue;
+                                if (poi.lookup.includes(q)) {
+                                    const center = [poi.longitude, poi.latitude];
+                                    features.push({
+                                        type: 'Feature',
+                                        geometry: {
+                                            type: 'Point',
+                                            coordinates: center
+                                        },
+                                        // the geocoder renders lines in result items based on splitting the comma
+                                        // we add a comma to make sure the address is on the second line
+                                        // we also split the address preserving only the first part
+                                        // because we don't need to extend the width of the results a bunch just to say Chattanooga, TN 374##
+                                        place_name: poi.name.replace(",", " ") + (poi.address ? "," + poi.address.split(",")[0] : ""),
+                                        properties: poi,
+                                        text: poi.name,
+                                        place_type: ['place'],
+                                        center
+                                    });
+                                    if (features.length >= 5) {
+                                        break;
+                                    }
+                                }
+                            } catch (err) {
+                                console.error(poi);
                                 throw err;
                             }
                         }
