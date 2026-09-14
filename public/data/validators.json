@@ -1,0 +1,298 @@
+[
+  {
+    "Name": "Bluegrass Grill",
+    "Address": "55 E Main St #101, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0357748",
+    "Longitude": "-85.3057707",
+    "Parking": "",
+    "Notes": "Validated parking for breakfast patrons"
+  },
+  {
+    "Name": "Bluff View Art District",
+    "Address": "411 E 2nd St, Chattanooga, TN 37403, USA",
+    "Latitude": "35.0550666",
+    "Longitude": "-85.3050032",
+    "Parking": "",
+    "Notes": "Offers validated parking"
+  },
+  {
+    "Name": "Center MedSpa",
+    "Address": "320 E Main St Ste 110, Chattanooga, TN 37408, USA",
+    "Latitude": "35.034646",
+    "Longitude": "-85.3037832",
+    "Parking": "",
+    "Notes": "Validated Parking in Lot"
+  },
+  {
+    "Name": "Chattanooga Market",
+    "Address": "1801 Reggie White Blvd, Chattanooga, TN 37408, USA",
+    "Latitude": "35.036998",
+    "Longitude": "-85.3175437",
+    "Parking": "",
+    "Notes": "Free ParkingOpen on Sundays April - November"
+  },
+  {
+    "Name": "Chattanooga Municipal Bldg.",
+    "Address": "101 E 11th St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0435454",
+    "Longitude": "-85.3074441",
+    "Parking": "",
+    "Notes": "Offers Validated Parking"
+  },
+  {
+    "Name": "Chattanooga Public Library - Downtown",
+    "Address": "1001 Broad St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0443573",
+    "Longitude": "-85.3105861",
+    "Parking": "EPB Garage",
+    "Notes": "The library offers 40 complimentary 2-hour parking passes available every day in the EPB Parking Garage located adjacent to the Downtown Library at 1-99 E 10th St, Chattanooga, TN 37402. These are available on a first come, first serve basis."
+  },
+  {
+    "Name": "Champy's",
+    "Address": "526 E M L King Blvd, Chattanooga, TN 37403, USA",
+    "Latitude": "35.0432591",
+    "Longitude": "-85.3021391",
+    "Parking": "",
+    "Notes": "Free parking lot for patrons"
+  },
+  {
+    "Name": "CHI Memorial Integrative Medicine Associates - Chattanooga",
+    "Address": "320 E Main St Ste. 200, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0344968",
+    "Longitude": "-85.3038062",
+    "Parking": "",
+    "Notes": "Free surface lot for visitors"
+  },
+  {
+    "Name": "Conga Latin Food",
+    "Address": "Mission at Main, 26 E Main St Ste 102, Chattanooga, TN 37408, USA",
+    "Latitude": "35.035635",
+    "Longitude": "-85.306441",
+    "Parking": "",
+    "Notes": "Validated Parking"
+  },
+  {
+    "Name": "Easy Bistro & Bar",
+    "Address": "801 Chestnut St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0469442",
+    "Longitude": "-85.3118401",
+    "Parking": "",
+    "Notes": "Offers FREE parking for patrons"
+  },
+  {
+    "Name": "Edley's Bar-B-Que",
+    "Address": "205 Manufacturers Rd Suite 110, Chattanooga, TN 37405, USA",
+    "Latitude": "35.0631644",
+    "Longitude": "-85.3130161",
+    "Parking": "",
+    "Notes": "Free parking in lot "
+  },
+  {
+    "Name": "F45 Training Northshore TN",
+    "Address": "119 N Market St, Chattanooga, TN 37405, USA",
+    "Latitude": "35.0640201",
+    "Longitude": "-85.3095929",
+    "Parking": "",
+    "Notes": "Free parking in Brightbase lot with daily passcode"
+  },
+  {
+    "Name": "Feed Table and Tavern",
+    "Address": "201 W Main St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0370954",
+    "Longitude": "-85.3095314",
+    "Parking": "",
+    "Notes": "Free parking for patrons"
+  },
+  {
+    "Name": "Five Wits Brewing Company",
+    "Address": "1501 Long St, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0361557",
+    "Longitude": "-85.308731",
+    "Parking": "",
+    "Notes": "FREE parking for patrons"
+  },
+  {
+    "Name": "Frazier Five & Dime",
+    "Address": "16 Frazier Ave, Chattanooga, TN 37405, USA",
+    "Latitude": "35.062386",
+    "Longitude": "-85.3080073",
+    "Parking": "",
+    "Notes": "Will credit bill $3 with proof of paid parking in the Coolidge Park lot"
+  },
+  {
+    "Name": "Gate 11 Distillery",
+    "Address": "Inside the historic Chattanooga Choo Choo terminal, 1400 Market St Suite 108, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0372",
+    "Longitude": "-85.3067355",
+    "Parking": "",
+    "Notes": "FREE parking for patrons"
+  },
+  {
+    "Name": "Geno's Salon",
+    "Address": "181 River St, Chattanooga, TN 37405, USA",
+    "Latitude": "35.062151",
+    "Longitude": "-85.307224",
+    "Parking": "",
+    "Notes": "Offers 2 hours of validated parking in the Theatre Lot or CARTA&#x27;s Shuttle Park Northshore Garage located behind the Shell gas station."
+  },
+  {
+    "Name": "Hennen's",
+    "Address": "193 Chestnut St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0549611",
+    "Longitude": "-85.3120716",
+    "Parking": "",
+    "Notes": "Offers free validated parking in River Pier Garage for patrons"
+  },
+  {
+    "Name": "Hunter Museum of American Art",
+    "Address": "10 Bluff View Ave, Chattanooga, TN 37403, USA",
+    "Latitude": "35.0558936",
+    "Longitude": "-85.306405",
+    "Parking": "",
+    "Notes": "Offers 2 hours free parking for museum visitors"
+  },
+  {
+    "Name": "Hotel Clemons",
+    "Address": "730 Chestnut St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.047302",
+    "Longitude": "-85.311327",
+    "Parking": "",
+    "Notes": "FREE for guest"
+  },
+  {
+    "Name": "K :: A Boutique by Katherine Roberts",
+    "Address": "200 Manufacturers Rd #103, Chattanooga, TN 37405, USA",
+    "Latitude": "35.062052",
+    "Longitude": "-85.3119837",
+    "Parking": "",
+    "Notes": "Offers daily parking codes"
+  },
+  {
+    "Name": "MyEyeDr",
+    "Address": "629 Market St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0486207",
+    "Longitude": "-85.3099276",
+    "Parking": "",
+    "Notes": "Offers Validated Parking"
+  },
+  {
+    "Name": "Niedlov's Cafe & Bakery",
+    "Address": "215 E Main St, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0352405",
+    "Longitude": "-85.3046728",
+    "Parking": "",
+    "Notes": "Limited free parking at building"
+  },
+  {
+    "Name": "Oddstory Brewing Co: Central",
+    "Address": "1604 Central Ave, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0303848",
+    "Longitude": "-85.2965915",
+    "Parking": "",
+    "Notes": "Free Parking for patrons"
+  },
+  {
+    "Name": "Old Gilman Grill",
+    "Address": "216 W 8th St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0468431",
+    "Longitude": "-85.3122889",
+    "Parking": "",
+    "Notes": "Offers validated parking for patrons."
+  },
+  {
+    "Name": "Opa! Greek Restaurant",
+    "Address": "Opa!, 249 River St, Chattanooga, TN 37405, USA",
+    "Latitude": "35.0616417",
+    "Longitude": "-85.3052389",
+    "Parking": "CARTA Theatre Center Lot, CARTA Shuttle Park Northshore Garage",
+    "Notes": "Friday and Saturday nights, 3 hours of validated parking in the Theatre Lot or CARTA's Shuttle Park Northshore Garage located behind the Shell gas station. "
+  },
+  {
+    "Name": "Petal and Pour- Café",
+    "Address": "800 Broad St Ste 100, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0470203",
+    "Longitude": "-85.3102814",
+    "Parking": "",
+    "Notes": "Validated parking "
+  },
+  {
+    "Name": "Public House Restaurant",
+    "Address": "1110 Market St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.042324",
+    "Longitude": "-85.3086776",
+    "Parking": "",
+    "Notes": "Park in the Warehouse Row parking garage and bring in your ticket to receive 3 hours validation"
+  },
+  {
+    "Name": "River Valley Dentistry",
+    "Address": "125 Cherokee Blvd. UNIT 119, Chattanooga, TN 37405, USA",
+    "Latitude": "35.0641075",
+    "Longitude": "-85.3106446",
+    "Parking": "",
+    "Notes": "Validated parking in Omega garage behind office on 1st and 3rd levels. NO PARKING ON LEVEL 2"
+  },
+  {
+    "Name": "Sculpture Fields at Montague Park",
+    "Address": "1800 Polk St, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0261748",
+    "Longitude": "-85.2936236",
+    "Parking": "",
+    "Notes": "Free surface lot for visitors"
+  },
+  {
+    "Name": "Signal Mill",
+    "Address": "205 Manufacturers Rd, Chattanooga, TN 37405, USA",
+    "Latitude": "35.062915",
+    "Longitude": "-85.3120377",
+    "Parking": "",
+    "Notes": "Free surface lot for patrons"
+  },
+  {
+    "Name": "Southside Dental Arts LLC",
+    "Address": "200 W Main St, Chattanooga, TN 37408, USA",
+    "Latitude": "35.036804",
+    "Longitude": "-85.3094014",
+    "Parking": "",
+    "Notes": "Offers validation for certain lots"
+  },
+  {
+    "Name": "State of Confusion",
+    "Address": "301 E Main St, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0350986",
+    "Longitude": "-85.304217",
+    "Parking": "",
+    "Notes": "Limited free parking in gravel lot"
+  },
+  {
+    "Name": "STIR",
+    "Address": "1444 Market St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0368513",
+    "Longitude": "-85.3068803",
+    "Parking": "",
+    "Notes": "Will credit your tab the cost of parking with proof"
+  },
+  {
+    "Name": "Tap House",
+    "Address": "3800 St Elmo Ave #114, Chattanooga, TN 37409, USA",
+    "Latitude": "35.0107889",
+    "Longitude": "-85.3279533",
+    "Parking": "",
+    "Notes": "Free validated parking for patrons"
+  },
+  {
+    "Name": "Velo Coffee Roasters",
+    "Address": "509 E Main St #3, Chattanooga, TN 37408, USA",
+    "Latitude": "35.0341175",
+    "Longitude": "-85.3011896",
+    "Parking": "",
+    "Notes": "Limited free parking for patrons"
+  },
+  {
+    "Name": "Wooden City",
+    "Address": "203 Broad St, Chattanooga, TN 37402, USA",
+    "Latitude": "35.0544382",
+    "Longitude": "-85.3110209",
+    "Parking": "",
+    "Notes": "Validated Parking For Patrons"
+  }
+]

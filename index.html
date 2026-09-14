@@ -790,7 +790,8 @@
         window.app = {
             data: {
                 addresses: null,
-                pois: null
+                pois: null,
+                validators: null
             },
             funcs: {
                 render_parking_options: function () {
@@ -856,6 +857,24 @@
                     lookup: address.toLowerCase(),
                     latitude: Number(row.Latitude),
                     longitude: Number(row.Longitude),
+                });
+            });
+        })();
+
+        (async function load_validators () {
+            const url = "./public/data/validators.json";
+            const response = await fetch(url);
+            const rows = await response.json();
+            app.data.validators = rows.map(row => {
+                return ({
+                    type: "validator",
+                    name: row.Name,
+                    address: row.Address,
+                    lookup: row.Name.toLowerCase() + " " + row.Address.toLowerCase(),
+                    latitude: Number(row.Latitude),
+                    longitude: Number(row.Longitude),
+                    parking: row.Parking.trim().split(",").map(it => it.trim()),
+                    notes: row.Notes
                 });
             });
         })();
@@ -1046,29 +1065,69 @@
         const geocoderApi = {
             forwardGeocode: async function (config) {
                 try {
+                    const q = config.query.toLowerCase();
+
                     const features = [];
-                    for (let i = 0; i < app.data.addresses.length; i++) {
-                        const address = app.data.addresses[i];
-                        if (!address) continue;
-                        if (address.lookup.includes(config.query.toLowerCase())) {
-                            const center = [address.longitude, address.latitude];
-                            features.push({
-                                type: 'Feature',
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: center
-                                },
-                                place_name: address.address,
-                                properties: address,
-                                text: address.address,
-                                place_type: ['place'],
-                                center
-                            });
-                            if (features.length >= 5) {
-                                break;
+
+                    if (app.data.validators) {
+                        for (let i = 0; i < app.data.validators.length; i++) {
+                            const validator = app.data.validators[i];
+                            try {
+                                if (!validator) continue;
+                                if (validator.lookup.includes(q)) {
+                                    const center = [validator.longitude, validator.latitude];
+                                    features.push({
+                                        type: 'Feature',
+                                        geometry: {
+                                            type: 'Point',
+                                            coordinates: center
+                                        },
+                                        // the geocoder renders lines in result items based on splitting the comma
+                                        // we add a comma to make sure the address is on the second line
+                                        // we also split the address preserving only the first part
+                                        // because we don't need to extend the width of the results a bunch just to say Chattanooga, TN 374##
+                                        place_name: validator.name + "," + validator.address.split(",")[0],
+                                        properties: validator,
+                                        text: validator.name + "," + validator.address,
+                                        place_type: ['place'],
+                                        center
+                                    });
+                                    if (features.length >= 5) {
+                                        break;
+                                    }
+                                }
+                            } catch (err) {
+                                console.error(validator);
+                                throw err;
                             }
                         }
                     }
+
+                    if (app.data.addresses) {
+                        for (let i = 0; i < app.data.addresses.length; i++) {
+                            const address = app.data.addresses[i];
+                            if (!address) continue;
+                            if (address.lookup.includes(q)) {
+                                const center = [address.longitude, address.latitude];
+                                features.push({
+                                    type: 'Feature',
+                                    geometry: {
+                                        type: 'Point',
+                                        coordinates: center
+                                    },
+                                    place_name: address.address,
+                                    properties: address,
+                                    text: address.address,
+                                    place_type: ['place'],
+                                    center
+                                });
+                                if (features.length >= 5) {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     // console.log("features:", features);
 
                     return {
