@@ -871,6 +871,7 @@
                 if (!row.name) continue;
                 const poi = {
                     type: "poi",
+                    osm_id: row["@id"],
                     name: row.name,
                     latitude: Number(row["@lat"]),
                     longitude: Number(row["@lon"])
@@ -896,6 +897,7 @@
             app.data.validators = rows.map(row => {
                 return ({
                     type: "validator",
+                    osm_id: row["OSM ID"],
                     name: row.Name,
                     address: row.Address,
                     lookup: row.Name.toLowerCase() + " " + row.Address.toLowerCase(),
@@ -1095,6 +1097,7 @@
                 try {
                     const q = config.query.toLowerCase();
 
+                    const osm_ids = [];
                     const features = [];
 
                     if (app.data.validators) {
@@ -1120,6 +1123,7 @@
                                         place_type: ['place'],
                                         center
                                     });
+                                    if (validator.osm_id) osm_ids.push(validator.osm_id);
                                     if (features.length >= 5) {
                                         break;
                                     }
@@ -1137,6 +1141,11 @@
                             try {
                                 if (!poi) continue;
                                 if (poi.lookup.includes(q)) {
+                                    if (osm_ids.includes(poi.osm_id)) {
+                                        console.log("skipping poi because we already have seen this osm id");
+                                        continue;
+                                    }
+
                                     const center = [poi.longitude, poi.latitude];
                                     features.push({
                                         type: 'Feature',

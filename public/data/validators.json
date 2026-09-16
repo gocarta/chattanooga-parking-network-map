@@ -1,13 +1,6 @@
 [
   {
-    "Name": "Bluegrass Grill",
-    "Address": "55 E Main St #101, Chattanooga, TN 37408, USA",
-    "Latitude": "35.0357748",
-    "Longitude": "-85.3057707",
-    "Parking": "",
-    "Notes": "Validated parking for breakfast patrons"
-  },
-  {
+    "OSM ID": "",
     "Name": "Bluff View Art District",
     "Address": "411 E 2nd St, Chattanooga, TN 37403, USA",
     "Latitude": "35.0550666",
@@ -16,6 +9,7 @@
     "Notes": "Offers validated parking"
   },
   {
+    "OSM ID": "",
     "Name": "Center MedSpa",
     "Address": "320 E Main St Ste 110, Chattanooga, TN 37408, USA",
     "Latitude": "35.034646",
@@ -24,6 +18,7 @@
     "Notes": "Validated Parking in Lot"
   },
   {
+    "OSM ID": "",
     "Name": "Chattanooga Market",
     "Address": "1801 Reggie White Blvd, Chattanooga, TN 37408, USA",
     "Latitude": "35.036998",
@@ -32,6 +27,7 @@
     "Notes": "Free ParkingOpen on Sundays April - November"
   },
   {
+    "OSM ID": "",
     "Name": "Chattanooga Municipal Bldg.",
     "Address": "101 E 11th St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0435454",
@@ -40,6 +36,7 @@
     "Notes": "Offers Validated Parking"
   },
   {
+    "OSM ID": "",
     "Name": "Chattanooga Public Library - Downtown",
     "Address": "1001 Broad St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0443573",
@@ -48,6 +45,7 @@
     "Notes": "The library offers 40 complimentary 2-hour parking passes available every day in the EPB Parking Garage located adjacent to the Downtown Library at 1-99 E 10th St, Chattanooga, TN 37402. These are available on a first come, first serve basis."
   },
   {
+    "OSM ID": "",
     "Name": "Champy's",
     "Address": "526 E M L King Blvd, Chattanooga, TN 37403, USA",
     "Latitude": "35.0432591",
@@ -56,6 +54,7 @@
     "Notes": "Free parking lot for patrons"
   },
   {
+    "OSM ID": "",
     "Name": "CHI Memorial Integrative Medicine Associates - Chattanooga",
     "Address": "320 E Main St Ste. 200, Chattanooga, TN 37408, USA",
     "Latitude": "35.0344968",
@@ -64,6 +63,7 @@
     "Notes": "Free surface lot for visitors"
   },
   {
+    "OSM ID": "2190022522",
     "Name": "Conga Latin Food",
     "Address": "Mission at Main, 26 E Main St Ste 102, Chattanooga, TN 37408, USA",
     "Latitude": "35.035635",
@@ -72,6 +72,7 @@
     "Notes": "Validated Parking"
   },
   {
+    "OSM ID": "13507621306",
     "Name": "Easy Bistro & Bar",
     "Address": "801 Chestnut St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0469442",
@@ -80,6 +81,7 @@
     "Notes": "Offers FREE parking for patrons"
   },
   {
+    "OSM ID": "10098005461",
     "Name": "Edley's Bar-B-Que",
     "Address": "205 Manufacturers Rd Suite 110, Chattanooga, TN 37405, USA",
     "Latitude": "35.0631644",
@@ -88,6 +90,7 @@
     "Notes": "Free parking in lot "
   },
   {
+    "OSM ID": "",
     "Name": "F45 Training Northshore TN",
     "Address": "119 N Market St, Chattanooga, TN 37405, USA",
     "Latitude": "35.0640201",
@@ -96,6 +99,7 @@
     "Notes": "Free parking in Brightbase lot with daily passcode"
   },
   {
+    "OSM ID": "3839248483",
     "Name": "Feed Table and Tavern",
     "Address": "201 W Main St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0370954",
@@ -104,6 +108,7 @@
     "Notes": "Free parking for patrons"
   },
   {
+    "OSM ID": "",
     "Name": "Five Wits Brewing Company",
     "Address": "1501 Long St, Chattanooga, TN 37408, USA",
     "Latitude": "35.0361557",
@@ -112,6 +117,7 @@
     "Notes": "FREE parking for patrons"
   },
   {
+    "OSM ID": "45074913",
     "Name": "Frazier Five & Dime",
     "Address": "16 Frazier Ave, Chattanooga, TN 37405, USA",
     "Latitude": "35.062386",
@@ -120,6 +126,7 @@
     "Notes": "Will credit bill $3 with proof of paid parking in the Coolidge Park lot"
   },
   {
+    "OSM ID": "",
     "Name": "Gate 11 Distillery",
     "Address": "Inside the historic Chattanooga Choo Choo terminal, 1400 Market St Suite 108, Chattanooga, TN 37402, USA",
     "Latitude": "35.0372",
@@ -128,6 +135,7 @@
     "Notes": "FREE parking for patrons"
   },
   {
+    "OSM ID": "",
     "Name": "Geno's Salon",
     "Address": "181 River St, Chattanooga, TN 37405, USA",
     "Latitude": "35.062151",
@@ -136,6 +144,7 @@
     "Notes": "Offers 2 hours of validated parking in the Theatre Lot or CARTA&#x27;s Shuttle Park Northshore Garage located behind the Shell gas station."
   },
   {
+    "OSM ID": "573564972",
     "Name": "Hennen's",
     "Address": "193 Chestnut St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0549611",
@@ -144,6 +153,7 @@
     "Notes": "Offers free validated parking in River Pier Garage for patrons"
   },
   {
+    "OSM ID": "1186493",
     "Name": "Hunter Museum of American Art",
     "Address": "10 Bluff View Ave, Chattanooga, TN 37403, USA",
     "Latitude": "35.0558936",
@@ -152,6 +162,7 @@
     "Notes": "Offers 2 hours free parking for museum visitors"
   },
   {
+    "OSM ID": "",
     "Name": "Hotel Clemons",
     "Address": "730 Chestnut St, Chattanooga, TN 37402, USA",
     "Latitude": "35.047302",
@@ -160,6 +171,7 @@
     "Notes": "FREE for guest"
   },
   {
+    "OSM ID": "",
     "Name": "K :: A Boutique by Katherine Roberts",
     "Address": "200 Manufacturers Rd #103, Chattanooga, TN 37405, USA",
     "Latitude": "35.062052",
@@ -168,6 +180,7 @@
     "Notes": "Offers daily parking codes"
   },
   {
+    "OSM ID": "",
     "Name": "MyEyeDr",
     "Address": "629 Market St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0486207",
@@ -176,6 +189,7 @@
     "Notes": "Offers Validated Parking"
   },
   {
+    "OSM ID": "1962185914",
     "Name": "Niedlov's Cafe & Bakery",
     "Address": "215 E Main St, Chattanooga, TN 37408, USA",
     "Latitude": "35.0352405",
@@ -184,6 +198,7 @@
     "Notes": "Limited free parking at building"
   },
   {
+    "OSM ID": "",
     "Name": "Oddstory Brewing Co: Central",
     "Address": "1604 Central Ave, Chattanooga, TN 37408, USA",
     "Latitude": "35.0303848",
@@ -192,6 +207,7 @@
     "Notes": "Free Parking for patrons"
   },
   {
+    "OSM ID": "13507621301",
     "Name": "Old Gilman Grill",
     "Address": "216 W 8th St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0468431",
@@ -200,6 +216,7 @@
     "Notes": "Offers validated parking for patrons."
   },
   {
+    "OSM ID": "11076281503",
     "Name": "Opa! Greek Restaurant",
     "Address": "Opa!, 249 River St, Chattanooga, TN 37405, USA",
     "Latitude": "35.0616417",
@@ -208,6 +225,7 @@
     "Notes": "Friday and Saturday nights, 3 hours of validated parking in the Theatre Lot or CARTA's Shuttle Park Northshore Garage located behind the Shell gas station. "
   },
   {
+    "OSM ID": "13968866421",
     "Name": "Petal and Pour- Café",
     "Address": "800 Broad St Ste 100, Chattanooga, TN 37402, USA",
     "Latitude": "35.0470203",
@@ -216,6 +234,7 @@
     "Notes": "Validated parking "
   },
   {
+    "OSM ID": "1365583549",
     "Name": "Public House Restaurant",
     "Address": "1110 Market St, Chattanooga, TN 37402, USA",
     "Latitude": "35.042324",
@@ -224,6 +243,7 @@
     "Notes": "Park in the Warehouse Row parking garage and bring in your ticket to receive 3 hours validation"
   },
   {
+    "OSM ID": "",
     "Name": "River Valley Dentistry",
     "Address": "125 Cherokee Blvd. UNIT 119, Chattanooga, TN 37405, USA",
     "Latitude": "35.0641075",
@@ -232,6 +252,7 @@
     "Notes": "Validated parking in Omega garage behind office on 1st and 3rd levels. NO PARKING ON LEVEL 2"
   },
   {
+    "OSM ID": "",
     "Name": "Sculpture Fields at Montague Park",
     "Address": "1800 Polk St, Chattanooga, TN 37408, USA",
     "Latitude": "35.0261748",
@@ -240,6 +261,7 @@
     "Notes": "Free surface lot for visitors"
   },
   {
+    "OSM ID": "",
     "Name": "Signal Mill",
     "Address": "205 Manufacturers Rd, Chattanooga, TN 37405, USA",
     "Latitude": "35.062915",
@@ -248,6 +270,7 @@
     "Notes": "Free surface lot for patrons"
   },
   {
+    "OSM ID": "",
     "Name": "Southside Dental Arts LLC",
     "Address": "200 W Main St, Chattanooga, TN 37408, USA",
     "Latitude": "35.036804",
@@ -256,6 +279,7 @@
     "Notes": "Offers validation for certain lots"
   },
   {
+    "OSM ID": "13699320201",
     "Name": "State of Confusion",
     "Address": "301 E Main St, Chattanooga, TN 37408, USA",
     "Latitude": "35.0350986",
@@ -264,6 +288,7 @@
     "Notes": "Limited free parking in gravel lot"
   },
   {
+    "OSM ID": "3839248484",
     "Name": "STIR",
     "Address": "1444 Market St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0368513",
@@ -272,6 +297,7 @@
     "Notes": "Will credit your tab the cost of parking with proof"
   },
   {
+    "OSM ID": "",
     "Name": "Tap House",
     "Address": "3800 St Elmo Ave #114, Chattanooga, TN 37409, USA",
     "Latitude": "35.0107889",
@@ -280,6 +306,7 @@
     "Notes": "Free validated parking for patrons"
   },
   {
+    "OSM ID": "6400926223",
     "Name": "Velo Coffee Roasters",
     "Address": "509 E Main St #3, Chattanooga, TN 37408, USA",
     "Latitude": "35.0341175",
@@ -288,6 +315,7 @@
     "Notes": "Limited free parking for patrons"
   },
   {
+    "OSM ID": "573588574",
     "Name": "Wooden City",
     "Address": "203 Broad St, Chattanooga, TN 37402, USA",
     "Latitude": "35.0544382",
