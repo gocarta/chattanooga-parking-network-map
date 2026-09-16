@@ -1209,14 +1209,22 @@
                 }
             }
         };
-        map.addControl(new MaplibreGeocoder(geocoderApi, {
+        const geocoderControl = new MaplibreGeocoder(geocoderApi, {
             maplibregl,
             debounceSearch: 0,
             minLength: 1,
             limit: 5,
             showResultsWhileTyping: true,
             collapsed: true
-        }), "top-left");
+        });
+        geocoderControl.on("result", function (result) {
+            // blur input if on mobile view
+            // so that the android keyboard doesn't continue to appear on the screen
+            if (window.innerWidth <= 1000) {
+                geocoderControl._inputEl.blur();
+            }
+        });
+        map.addControl(geocoderControl, "top-left");
 
         map.addControl(new maplibregl.GeolocateControl({
             positionOptions: {
