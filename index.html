@@ -919,7 +919,7 @@
             <div id="header-content-left">
                 <img id="header-content-left-logo" src="./public/assets/chattanooga-parking-network.png">
                 <div id="header-content-left-title">
-                    <div id="header-content-left-title-upper">CHATTANOOGA [Proof of Concept]</div>
+                    <div id="header-content-left-title-upper">CHATTANOOGA [DRAFT]</div>
                     <div id="header-content-left-title-bottom">PARKING NETWORK</div>
                 </div>
             </div>
@@ -1323,7 +1323,7 @@
                                 <span class="popup-parking-daily-rate">${hourly_rate.length > 10 ? hourly_rate :  "$" + hourly_rate + " / HR"}</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
                             </div>
                             ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
-                            ${[0, "No"].indexOf(opt["Minimum"]) > -1 ? '<div class="no-minimum">No Minimum</div>' : opt["Minimum"] != "" ? `<div class="minimum">${opt["Minimum"]} Minimum</div>` : ""}
+                            ${[0, "No"].indexOf(opt["Minimum"]) > -1 ? '<div class="no-minimum">No Minimum</div>' : ["?", ""].indexOf(opt["Minimum"]) === -1 ? `<div class="minimum">${opt["Minimum"]} Minimum</div>` : ""}
                             ${["", "N/A"].indexOf(fine) === -1 ? `<div class="fine">$${fine} Fine</div>` : ""}
                             <div class="popup-parking-footer">
                                 ${option_type}${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `<div class="dot"></div>${opt["Spaces"]} Spaces` : ""}
