@@ -825,6 +825,7 @@
                     document.getElementById("app").setAttribute("data-map-filter", "null");                    
                 }
             },
+            promises: {},
             state: {
                 filter: null, // "first_hour_free", "validation_accepted", or "consumer_rate_guarantee"
                 markers: {
@@ -849,7 +850,15 @@
             return rows;
         }
 
-        (async function load_addresses () {
+        app.promises.load_parking_options = Promise.resolve((async function load_parking_options () {
+            const url = "./public/data/data.json";
+            const response = await fetch(url);
+            const rows = await response.json();
+            app.data.parking_options = rows;
+            console.log("set parking options");
+        })());
+
+        app.promises.load_addresses = Promise.resolve((async function load_addresses () {
             const url = "https://gocarta.s3.us-east-2.amazonaws.com/public/data/tn_ng911_address_points/v1/data.tsv";
             const rows = await load_tsv(url);
             app.data.addresses = rows.map(row => {
@@ -862,9 +871,9 @@
                     longitude: Number(row.Longitude),
                 });
             });
-        })();
+        })());
 
-        (async function load_pois () {
+        app.promises.load_pois = Promise.resolve((async function load_pois () {
             const url = "https://gocarta.s3.us-east-2.amazonaws.com/public/data/osm_pois/v1/data.tsv";
             const rows = await load_tsv(url);
             console.log("pois:", rows);
@@ -891,9 +900,16 @@
                 pois.push(poi);
             }
             app.data.pois = pois;
-        })();
+        })());
 
-        (async function load_validators () {
+        app.promises.load_osm_parking = Promise.resolve((async function load_osm_parking () {
+            const url = "https://gocarta.s3.us-east-2.amazonaws.com/public/data/osm_parking/v1/data.polygons.geojson";
+            const response = await fetch(url);
+            const geojson = await response.json();
+            app.data.osm_parking = geojson;
+        })());
+
+        app.promises.load_validators = Promise.resolve((async function load_validators () {
             const url = "./public/data/validators.json";
             const response = await fetch(url);
             const rows = await response.json();
@@ -910,7 +926,27 @@
                     notes: row.Notes
                 });
             });
-        })();
+        })());
+
+        app.promises.enrich_parking = Promise.resolve(Promise.all([app.promises.load_parking_options, app.promises.load_osm_parking]).then(function () {
+            // enrich parking data with parking options price guide
+            const osm_parking_by_id = {};
+            app.data.osm_parking.features.forEach(function (feature) {
+                const osm_id = feature.properties["@id"].toString();
+                osm_parking_by_id[osm_id] = feature;
+            });
+
+            app.data.parking_options.forEach(function (item) {
+                const osm_id = item["OSM ID"].toString();
+                if (osm_id !== "") {
+                    if (osm_id in osm_parking_by_id) {
+                        osm_parking_by_id[osm_id].properties.price_guide = item["Price Guide"].trim().toUpperCase();
+                    }
+                }
+            });
+
+
+        }));
     </script>
 
     <script src="https://unpkg.com/@maplibre/maplibre-gl-geocoder@1.5.0/dist/maplibre-gl-geocoder.min.js"></script>
@@ -1237,118 +1273,113 @@
             showUserHeading: true
         }), "top-right");
 
-        // load static data
-        fetch("./public/data/data.json")
-            .then(function (response) { return response.json(); })
-            .then(function (json_data) {
-                console.log("json_data:", json_data);
-                app.data.parking_options = json_data;
-                console.log("set parking options");
+        app.promises.load_parking_options.then(function () {
+            const popup = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 25});
 
-                const popup = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 25});
+            const markers = [];
+            app.data.parking_options.forEach(function (opt) {
+                const parking_name = opt.Name.trim();
 
-                const markers = [];
-                app.data.parking_options.forEach(function (opt) {
-                    const parking_name = opt.Name.trim();
+                if (!parking_name) {
+                    console.log("skipping because there is no name");
+                    return;                        
+                }
 
-                    if (!parking_name) {
-                        console.log("skipping because there is no name");
-                        return;                        
-                    }
+                const hourly_rate = opt["Hourly Rate"].trim();
 
-                    const hourly_rate = opt["Hourly Rate"].trim().replace("$", "");
+                if (hourly_rate === "") {
+                    console.log("skipping " + parking_name + " because we don't know the hourly rate");
+                    return;
+                }
 
-                    if (hourly_rate === "") {
-                        console.log("skipping " + parking_name + " because we don't know the hourly rate");
-                        return;
-                    }
+                const daily_max = opt["Daily Max"].trim().replace("$", "");
 
-                    const daily_max = opt["Daily Max"].trim().replace("$", "");
+                const fine = opt["Fine"].trim().replace("$", "");
 
-                    const fine = opt["Fine"].trim().replace("$", "");
-
-                    const point = [opt.Longitude, opt.Latitude];
-                    const el = document.createElement('div');
-                    el.className = "marker";
-                    el.className += " " + (opt["Garage or Lot"] === "Garage" ? "marker-garage" : "marker-lot");
-                    el.className += " " + (opt["Public or Private"] === "Public" ? "marker-public" : "marker-private");
+                const point = [opt.Longitude, opt.Latitude];
+                const el = document.createElement('div');
+                el.className = "marker";
+                el.className += " " + (opt["Garage or Lot"] === "Garage" ? "marker-garage" : "marker-lot");
+                el.className += " " + (opt["Public or Private"] === "Public" ? "marker-public" : "marker-private");
 
 
-                    let public_or_private = opt["Public or Private"];
-                    if (["Public", "Private"].indexOf(public_or_private) === -1) {
-                        public_or_private = "";
-                    }
-                    let garage_or_lot = opt["Garage or Lot"];
-                    if (["Garage", "Lot"].indexOf(garage_or_lot) === -1) {
-                        garage_or_lot = "";
-                    }
+                let public_or_private = opt["Public or Private"];
+                if (["Public", "Private"].indexOf(public_or_private) === -1) {
+                    public_or_private = "";
+                }
+                let garage_or_lot = opt["Garage or Lot"];
+                if (["Garage", "Lot"].indexOf(garage_or_lot) === -1) {
+                    garage_or_lot = "";
+                }
 
-                    let option_type = [public_or_private, garage_or_lot].filter(Boolean).join(" ");
-                    if (["Public Garage", "Public Lot", "Private Garage", "Private Lot", "Lot", "Garage"].indexOf(option_type) === -1) {
-                        console.error("invalid option type");
-                        option_type = null;
-                    }
+                let option_type = [public_or_private, garage_or_lot].filter(Boolean).join(" ");
+                if (["Public Garage", "Public Lot", "Private Garage", "Private Lot", "Lot", "Garage"].indexOf(option_type) === -1) {
+                    console.error("invalid option type");
+                    option_type = null;
+                }
 
-                    el.setAttribute("data-first-hour-free", ["yes", "Yes"].indexOf(opt["First Hour Free"]) > -1);
-                    el.setAttribute("data-validation-accepted", ["yes", "true"].indexOf((opt["Validation Accepted"] || "").toLowerCase()) > -1);
-                    el.setAttribute("data-consumer-rate-guarantee", ["yes", "true"].indexOf((opt["Consumer Rate Guarantee"] || "").toLowerCase()) > -1);
+                el.setAttribute("data-first-hour-free", ["yes", "Yes"].indexOf(opt["First Hour Free"]) > -1);
+                el.setAttribute("data-validation-accepted", ["yes", "true"].indexOf((opt["Validation Accepted"] || "").toLowerCase()) > -1);
+                el.setAttribute("data-consumer-rate-guarantee", ["yes", "true"].indexOf((opt["Consumer Rate Guarantee"] || "").toLowerCase()) > -1);
 
-                    let price_guide = "unknown";
-                    if ((opt["Price Guide"] || "").toUpperCase() === "GREAT VALUE") {
-                        price_guide = "great"
-                    } else if ((opt["Price Guide"] || "").toUpperCase() === "MODERATE") {
-                        price_guide = "moderate";
-                    } else if ((opt["Price Guide"] || "").toUpperCase() === "HIGHER") {
-                        price_guide = "higher"
-                    }
-                    el.setAttribute("data-price", price_guide);
+                let price_guide = "unknown";
+                if ((opt["Price Guide"] || "").toUpperCase() === "GREAT VALUE") {
+                    price_guide = "great"
+                } else if ((opt["Price Guide"] || "").toUpperCase() === "MODERATE") {
+                    price_guide = "moderate";
+                } else if ((opt["Price Guide"] || "").toUpperCase() === "HIGHER") {
+                    price_guide = "higher"
+                }
+                el.setAttribute("data-price", price_guide);
 
-                    el.innerHTML = '<div class="marker-inner">P</div>';
+                el.innerHTML = '<div class="marker-inner">P</div>';
 
-                    let popup_logo = "./public/assets/popup-logo.png";
-                    if (opt["Operator"] === "CARTA") {
-                        popup_logo = "./public/assets/chattanooga-parking-network.png";
-                    } else if (opt["Operator"] === "Brightbase") {
-                        popup_logo = "./public/assets/brightbase.png";
-                    } else if (opt["Operator"] === "Republic") {
-                        popup_logo = "./public/assets/republic.png";
-                    }
+                let popup_logo = "./public/assets/popup-logo.png";
+                if (opt["Operator"] === "CARTA") {
+                    popup_logo = "./public/assets/chattanooga-parking-network.png";
+                } else if (opt["Operator"] === "Brightbase") {
+                    popup_logo = "./public/assets/brightbase.png";
+                } else if (opt["Operator"] === "Republic") {
+                    popup_logo = "./public/assets/republic.png";
+                }
 
-                    const description = `
-                    <div class="popup-parking">
-                        <div class="popup-parking-top">
-                            <img src="${popup_logo}">
-                            <div class="popup-parking-title">${parking_name}</div>
+                const description = `
+                <div class="popup-parking">
+                    <div class="popup-parking-top">
+                        <img src="${popup_logo}">
+                        <div class="popup-parking-title">${parking_name}</div>
+                    </div>
+                    <div class="popup-price-guide" data-price-guide="${price_guide}">${opt["Price Guide"]}</div>
+                    <div class="popup-parking-bottom">
+                        <div>
+                            <span class="popup-parking-daily-rate">${hourly_rate ? hourly_rate :  ""}</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
                         </div>
-                        <div class="popup-price-guide" data-price-guide="${price_guide}">${opt["Price Guide"]}</div>
-                        <div class="popup-parking-bottom">
-                            <div>
-                                <span class="popup-parking-daily-rate">${hourly_rate.length > 10 ? hourly_rate :  "$" + hourly_rate + " / HR"}</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
-                            </div>
-                            ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
-                            ${[0, "No"].indexOf(opt["Minimum"]) > -1 ? '<div class="no-minimum">No Minimum</div>' : ["?", ""].indexOf(opt["Minimum"]) === -1 ? `<div class="minimum">${opt["Minimum"]} Minimum</div>` : ""}
-                            ${["", "N/A"].indexOf(fine) === -1 ? `<div class="fine">$${fine} Fine</div>` : ""}
-                            <div class="popup-parking-footer">
-                                ${option_type}${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `<div class="dot"></div>${opt["Spaces"]} Spaces` : ""}
-                            </div>
+                        ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
+                        ${[0, "No"].indexOf(opt["Minimum"]) > -1 ? '<div class="no-minimum">No Minimum</div>' : ["?", ""].indexOf(opt["Minimum"]) === -1 ? `<div class="minimum">${opt["Minimum"]} Minimum</div>` : ""}
+                        ${["", "N/A"].indexOf(fine) === -1 ? `<div class="fine">$${fine} Fine</div>` : ""}
+                        <div class="popup-parking-footer">
+                            ${option_type}${["", undefined, null].indexOf(opt["Spaces"]) === -1 ? `<div class="dot"></div>${opt["Spaces"]} Spaces` : ""}
                         </div>
                     </div>
-                    `;
+                </div>
+                `;
 
-                    // Show popup on hover
-                    el.addEventListener('mouseenter', () => {
-                        popup.setHTML(description).addTo(map).setLngLat(point);
-                    });
-                    // Hide popup when mouse leaves
-                    el.addEventListener('mouseleave', () => popup.remove());
-
-                    const marker = new maplibregl.Marker( { element: el }).setLngLat(point).addTo(map);
-                    markers.push(marker);             
+                // Show popup on hover
+                el.addEventListener('mouseenter', () => {
+                    popup.setHTML(description).addTo(map).setLngLat(point);
                 });
-                app.state.markers.parking = markers;
+                // Hide popup when mouse leaves
+                if (window.location.href.indexOf("remove_popup=false") === -1) {
+                    el.addEventListener('mouseleave', () => popup.remove());
+                }
 
-                app.funcs.render_parking_options();
+                const marker = new maplibregl.Marker( { element: el }).setLngLat(point).addTo(map);
+                markers.push(marker);
             });
+            app.state.markers.parking = markers;
+
+            app.funcs.render_parking_options();
+        });
 
         map.on('style.load', () => {
             fetch("https://gocarta.s3.us-east-2.amazonaws.com/public/data/simple_bus_routes/v1/data.lines.geojson")
@@ -1401,6 +1432,49 @@
 
                     app.funcs.render_shuttle_routes();
                 });
+
+            app.promises.enrich_parking.then(function () {
+                const osm_parking_with_price_guide = [];
+                app.data.osm_parking.features.forEach(function (feat) {
+                    if (feat.properties.price_guide) {
+                        osm_parking_with_price_guide.push(feat);
+                    }
+                });
+                map.addSource('parking-footprints', {
+                    type: 'geojson',
+                    data: { type: "FeatureCollection", features: osm_parking_with_price_guide }
+                });
+
+                map.addLayer({
+                    id: 'parking-fill',
+                    type: 'fill',
+                    source: 'parking-footprints',
+                    paint: {
+                        'fill-color': [
+                        'match',
+                        ['get', 'price_guide'],
+                        'GREAT VALUE', '#048e23', // green
+                        'MODERATE', '#feba02',    // yellow
+                        'HIGHER', '#d1120f',      // red
+                        '#CCCCCC'                // default/fallback
+                        ],
+                        'fill-opacity': 0.6
+                    },
+                    minzoom: 15
+                });
+
+                map.addLayer({
+                    id: 'parking-outline',
+                    type: 'line',
+                    source: 'parking-footprints',
+                    paint: {
+                        'line-color': '#333',
+                        'line-width': 1
+                    },
+                    minzoom: 15
+                });
+
+            });
 
             (async function () {
                 // load initial data
