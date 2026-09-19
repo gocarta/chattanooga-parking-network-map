@@ -1382,7 +1382,29 @@
         });
 
         map.on('style.load', () => {
-            fetch("https://gocarta.s3.us-east-2.amazonaws.com/public/data/simple_bus_routes/v1/data.lines.geojson")
+            fetch("./public/data/shuttle.routes.geojson")
+                .then(function (response) { return response.json(); })
+                .then(function (geojson) {
+                    console.log("geojson:", geojson);
+                    app.data.shuttle_routes = geojson;
+
+                    map.addSource("shuttle_routes", { type: "geojson", data: app.data.shuttle_routes });
+                    map.addLayer({
+                        id: "shuttle-routes-layer",
+                        type: "line",
+                        source: "shuttle_routes",
+                        layout: {
+                            "line-join": "round",
+                            "line-cap": "round"
+                        },
+                        paint: {
+                            "line-color": "#0b67e4", 
+                            "line-width": 5,
+                            "line-opacity": .6
+                        }
+                    });                    
+                });
+            /*fetch( "https://gocarta.s3.us-east-2.amazonaws.com/public/data/simple_bus_routes/v1/data.lines.geojson")
                 .then(function (response) { return response.json(); })
                 .then(function (geojson) {
                     console.log("geojson:", geojson);
@@ -1431,7 +1453,7 @@
                     });
 
                     app.funcs.render_shuttle_routes();
-                });
+                }); */
 
             app.promises.enrich_parking.then(function () {
                 const osm_parking_with_price_guide = [];
