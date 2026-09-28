@@ -244,6 +244,9 @@
             color: #048e23;
             font-weight: bold;
         }
+        .free-hours {
+            font-weight: bold;
+        }
 
         #header-content-right {
             left: auto;
@@ -793,7 +796,8 @@
         window.app = {
             data: {
                 addresses: null,
-                pois: null,
+                osm_pois: null,
+                overture_places: null,
                 validators: null
             },
             funcs: {
@@ -851,7 +855,7 @@
         }
 
         app.promises.load_parking_options = Promise.resolve((async function load_parking_options () {
-            const url = "./public/data/data.json";
+            const url = "./public/data/providers.json";
             const response = await fetch(url);
             const rows = await response.json();
             app.data.parking_options = rows;
@@ -873,11 +877,10 @@
             });
         })());
 
-        app.promises.load_pois = Promise.resolve((async function load_pois () {
+        app.promises.load_osm_pois = Promise.resolve((async function load_osm_pois () {
             const url = "https://gocarta.s3.us-east-2.amazonaws.com/public/data/osm_pois/v1/data.tsv";
             const rows = await load_tsv(url);
-            console.log("pois:", rows);
-            const pois = [];
+            const osm_pois = [];
             for (let i = 0; i < rows.length; i++) {
                 const row = rows[i];
                 if (!row.name) continue;
@@ -897,9 +900,32 @@
 
                 poi.lookup = poi.name.toLowerCase() + (poi.address ? " " + poi.address.toLowerCase() : "");
 
-                pois.push(poi);
+                osm_pois.push(poi);
             }
-            app.data.pois = pois;
+            app.data.osm_pois = osm_pois;
+        })());
+
+        app.promises.load_overture_places = Promise.resolve((async function load_overture_places () {
+            const url = "https://gocarta.s3.us-east-2.amazonaws.com/public/data/overture_places/v1/data.tsv";
+            const rows = await load_tsv(url);
+            const places = [];
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row.name) continue;
+                const place = {
+                    type: "place",
+                    id: row.id, // GERS ID
+                    name: row.name,
+                    address: row.address,
+                    latitude: Number(row["latitude"]),
+                    longitude: Number(row["longitude"])
+                };
+
+                place.lookup = place.name.toLowerCase() + " " + place.address.toLowerCase();
+
+                places.push(place);
+            }
+            app.data.overture_places = places;
         })());
 
         app.promises.load_osm_parking = Promise.resolve((async function load_osm_parking () {
@@ -917,6 +943,7 @@
                 return ({
                     type: "validator",
                     osm_id: row["OSM ID"],
+                    gers_id: row["GERS ID"],
                     name: row.Name,
                     address: row.Address,
                     lookup: row.Name.toLowerCase() + " " + row.Address.toLowerCase(),
@@ -937,11 +964,13 @@
             });
 
             app.data.parking_options.forEach(function (item) {
-                const osm_id = item["OSM ID"].toString();
-                if (osm_id !== "") {
-                    if (osm_id in osm_parking_by_id) {
-                        osm_parking_by_id[osm_id].properties.price_guide = item["Price Guide"].trim().toUpperCase();
-                    }
+                const osm_ids = item["OSM ID"].toString();
+                if (osm_ids !== "") {
+                    osm_ids.split(",").forEach(function (osm_id) {
+                        if (osm_id in osm_parking_by_id) {
+                            osm_parking_by_id[osm_id].properties.price_guide = item["Price Guide"].trim().toUpperCase();
+                        }
+                    });
                 }
             });
 
@@ -1136,8 +1165,14 @@
                 try {
                     const q = config.query.toLowerCase();
 
+                    const gers_ids = [];
                     const osm_ids = [];
                     const features = [];
+
+                    const xmin = -85.3456729790683;
+                    const ymin = 34.98103278423423;
+                    const xmax = -85.28189755398803;
+                    const ymax = 35.080288228384305;
 
                     if (app.data.validators) {
                         for (let i = 0; i < app.data.validators.length; i++) {
@@ -1145,6 +1180,8 @@
                             try {
                                 if (!validator) continue;
                                 if (validator.lookup.includes(q)) {
+                                    // console.log("found validator:", validator.name + " " + validator.address);
+
                                     const center = [validator.longitude, validator.latitude];
                                     features.push({
                                         type: 'Feature',
@@ -1163,6 +1200,7 @@
                                         center
                                     });
                                     if (validator.osm_id) osm_ids.push(validator.osm_id);
+                                    if (validator.gers_id) gers_ids.push(validator.gers_id);
                                     if (features.length >= 5) {
                                         break;
                                     }
@@ -1174,16 +1212,62 @@
                         }
                     }
 
-                    if (app.data.pois) {
-                        for (let i = 0; i < app.data.pois.length; i++) {
-                            const poi = app.data.pois[i];
+                    if (app.data.overture_places) {
+                        for (let i = 0; i < app.data.overture_places.length; i++) {
+                            const place = app.data.overture_places[i];
+                            try {
+                                if (!place) continue;
+                                if (place.lookup.includes(q)) {
+                                    if (gers_ids.includes(place.id)) {
+                                        // console.log("skipping place because we already have seen this GERS ID");
+                                        continue;
+                                    }
+                                    // console.log("found:", place.name + " " + place.address, "in overture dataset: " + place.id);
+
+                                    // outside downtown area
+                                    if (place.longitude < xmin || place.longitude > xmax || place.latitude < ymin || place.latitude > ymax) continue;
+
+                                    const center = [place.longitude, place.latitude];
+                                    features.push({
+                                        type: 'Feature',
+                                        geometry: {
+                                            type: 'Point',
+                                            coordinates: center
+                                        },
+                                        // the geocoder renders lines in result items based on splitting the comma
+                                        // we add a comma to make sure the address is on the second line
+                                        // we also split the address preserving only the first part
+                                        // because we don't need to extend the width of the results a bunch just to say Chattanooga, TN 374##
+                                        place_name: place.name.replace(",", " ") + (place.address ? "," + place.address.split(",")[0] : ""),
+                                        properties: place,
+                                        text: place.name,
+                                        place_type: ['place'],
+                                        center
+                                    });
+                                    if (features.length >= 5) {
+                                        break;
+                                    }
+                                }
+                            } catch (err) {
+                                console.error(poi);
+                                throw err;
+                            }
+                        }
+                    }
+
+                    if (app.data.osm_pois && window.location.href.includes("search_osm_pois=true")) {
+                        for (let i = 0; i < app.data.osm_pois.length; i++) {
+                            const poi = app.data.osm_pois[i];
                             try {
                                 if (!poi) continue;
                                 if (poi.lookup.includes(q)) {
                                     if (osm_ids.includes(poi.osm_id)) {
-                                        console.log("skipping poi because we already have seen this osm id");
+                                        // console.log("skipping poi because we already have seen this osm id");
                                         continue;
                                     }
+
+                                    // outside downtown area
+                                    if (poi.longitude < xmin || poi.longitude > xmax || poi.latitude < ymin || poi.latitude > ymax) continue;
 
                                     const center = [poi.longitude, poi.latitude];
                                     features.push({
@@ -1218,6 +1302,9 @@
                             const address = app.data.addresses[i];
                             if (!address) continue;
                             if (address.lookup.includes(q)) {
+                                // outside downtown area
+                                if (address.longitude < xmin || address.longitude > xmax || address.latitude < ymin || address.latitude > ymax) continue;
+
                                 const center = [address.longitude, address.latitude];
                                 features.push({
                                     type: 'Feature',
@@ -1292,9 +1379,17 @@
                     return;
                 }
 
+                const osm_id = opt["OSM ID"].trim();
+                if (osm_id === "") {
+                    console.log("skipping " + parking_name + " because we don't an OSM ID and we're not confident in the location");
+                    return;
+                }
+
                 const daily_max = opt["Daily Max"].trim().replace("$", "");
 
                 const fine = opt["Fine"].trim().replace("$", "");
+
+                const free_hours = (opt["Free Hours"] || "").trim();
 
                 const point = [opt.Longitude, opt.Latitude];
                 const el = document.createElement('div');
@@ -1355,6 +1450,7 @@
                             <span class="popup-parking-daily-rate">${hourly_rate ? hourly_rate :  ""}</span>${daily_max !== "" ? '<div class="dot"></div>$' + daily_max + ' DAILY MAX' : ""}
                         </div>
                         ${opt["First Hour Free"] == "Yes" ? '<div class="first-hour-free">First Hour Free</div>' : ""}
+                        ${free_hours ? `<div class="free-hours">${free_hours}</div>` : ""}
                         ${[0, "No"].indexOf(opt["Minimum"]) > -1 ? '<div class="no-minimum">No Minimum</div>' : ["?", ""].indexOf(opt["Minimum"]) === -1 ? `<div class="minimum">${opt["Minimum"]} Minimum</div>` : ""}
                         ${["", "N/A"].indexOf(fine) === -1 ? `<div class="fine">$${fine} Fine</div>` : ""}
                         <div class="popup-parking-footer">
@@ -1385,7 +1481,7 @@
             fetch("./public/data/shuttle.routes.geojson")
                 .then(function (response) { return response.json(); })
                 .then(function (geojson) {
-                    console.log("geojson:", geojson);
+                    // console.log("geojson:", geojson);
                     app.data.shuttle_routes = geojson;
 
                     map.addSource("shuttle_routes", { type: "geojson", data: app.data.shuttle_routes });
@@ -1398,11 +1494,11 @@
                             "line-cap": "round"
                         },
                         paint: {
-                            "line-color": "#0b67e4", 
+                            "line-color": "#0b67e4",
                             "line-width": 5,
                             "line-opacity": .6
                         }
-                    });                    
+                    });
                 });
             /*fetch( "https://gocarta.s3.us-east-2.amazonaws.com/public/data/simple_bus_routes/v1/data.lines.geojson")
                 .then(function (response) { return response.json(); })
