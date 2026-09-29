@@ -476,10 +476,28 @@
             border-color: darkgray;
         }
 
+        .marker-validator {
+            border-radius: 50%;
+            display: none;
+        }
+        .marker-validator img {
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
         #app[data-map-filter="first_hour_free"] .marker[data-first-hour-free="true"] {
             z-index: 13;
         }
-        #app[data-map-filter="validation_accepted"] .marker[data-validation-accepted="true"] {
+        /* #app[data-map-filter="validation_accepted"] .marker[data-validation-accepted="true"] {
+            z-index: 13;
+        } */
+        #app[data-map-filter="validation_accepted"] .marker-validator {
+            display: block;
             z-index: 13;
         }
         #app[data-map-filter="consumer_rate_guarantee"] .marker[data-consumer-rate-guarantee="true"] {
@@ -597,6 +615,10 @@
         }
         #app[data-map-filter=consumer_rate_guarantee] #parking-options-card-consumer-rate-guarantee .parking-options-card-bottom-button-reset {
             display: block;
+        }
+
+        .popup-validator {
+            max-width: 250px;
         }
 
         .popup-parking-title {
@@ -834,7 +856,8 @@
                 filter: null, // "first_hour_free", "validation_accepted", or "consumer_rate_guarantee"
                 markers: {
                     parking: null,
-                    shuttles: null
+                    shuttles: null,
+                    validators: null
                 }
             }
         };
@@ -1086,7 +1109,7 @@
                         </div>
                         <div class="parking-option-card-content-text">
                             <div class="parking-option-card-title">VALIDATION ACCEPTED</div>
-                            <div class="parking-option-card-description">Show all parking locations where validation is allowed for free parking.</div>
+                            <div class="parking-option-card-description">Show all merchants that validate parking.</div>
                         </div>
                     </div>
                     <div class="parking-options-card-bottom">
@@ -1362,6 +1385,51 @@
             trackUserLocation: true,
             showUserHeading: true
         }), "top-right");
+
+        app.promises.load_validators.then(function () {
+            const popup = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 25});
+
+            const markers = [];
+            app.data.validators.forEach(function (validator) {
+                const point = [validator.longitude, validator.latitude];
+                const el = document.createElement('div');
+                el.className = "marker marker-validator";
+                el.innerHTML = '<div class="marker-inner"><img src="./public/assets/validation-accepted.png"></div>';
+
+                const description = `
+                    <div class="popup-validator">
+                        <div class="popup-parking-top">
+                            <div class="popup-parking-title">${validator.name}</div>
+                        </div>
+
+                        <div class="popup-parking-bottom">
+                            <div>
+                                ${validator.notes}
+                            </div>
+                            <div class="popup-parking-footer">
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                `;
+
+                // Show popup on hover
+                el.addEventListener('mouseenter', () => {
+                    popup.setHTML(description).addTo(map).setLngLat(point);
+                });
+
+                // Hide popup when mouse leaves
+                if (window.location.href.indexOf("remove_popup=false") === -1) {
+                    el.addEventListener('mouseleave', () => popup.remove());
+                }
+
+                const marker = new maplibregl.Marker({ element: el }).setLngLat(point).addTo(map);
+
+                markers.push(marker);
+            });
+            app.state.markers.validators = markers;
+        });
 
         app.promises.load_parking_options.then(function () {
             const popup = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 25});
