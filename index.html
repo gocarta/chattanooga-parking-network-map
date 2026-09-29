@@ -964,6 +964,9 @@
             });
 
             app.data.parking_options.forEach(function (item) {
+                // if doesn't have hourly rate skip, becuase don't want lot appearing on map without icon
+                if (item["Hourly Rate"].trim() === "") return;
+
                 const osm_ids = item["OSM ID"].toString();
                 if (osm_ids !== "") {
                     osm_ids.split(",").forEach(function (osm_id) {
