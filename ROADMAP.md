@@ -3,10 +3,11 @@ Here's the public roadmap for the Chattanooga Parking Network Map.
 
 ## Next Month
 - Add filter options to mobile experience
+- Display merchants that offer validation on the smaller mobile version (currently working on desktop)
 - Add legend to mobile
+- When a user searches for a restaurant or selects it, highlight the parking lots where the merchant validates. 
 
 ## Short-term (2-6 months)
-- Display merchants that offer validation on the smaller mobile version (currently working on desktop)
 - Load map at a specific location using a URL param (https://github.com/gocarta/chattanooga-parking-network-map/issues/12)
 - Publish list of parking garages and lots to CARTA's open data platform
 - Clicking on shuttle will popup route and headsign
