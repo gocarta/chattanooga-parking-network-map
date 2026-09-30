@@ -1,7 +1,11 @@
 # Roadmap
 Here's the public roadmap for the Chattanooga Parking Network Map.
 
-## Short-term (3-6 months)
+## Next Month
+- Add filter options to mobile experience
+- Add legend to mobile
+
+## Short-term (2-6 months)
 - Display merchants that offer validation on the smaller mobile version (currently working on desktop)
 - Load map at a specific location using a URL param (https://github.com/gocarta/chattanooga-parking-network-map/issues/12)
 - Publish list of parking garages and lots to CARTA's open data platform
