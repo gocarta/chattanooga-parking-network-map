@@ -22,6 +22,7 @@ Here's the public roadmap for the Chattanooga Parking Network Map.
 ## Long-term (after 1 year)
 - Display real-time availability of individual parking spots
 - Display all parking lots and garages downtown
+- Deliver Seamless Payment with providers in the Chattanooga Parking Network.  This might be a link to the partner's payment page, an embed or something else.
 
 ### Have an Idea?
 If you'd like to make a suggestion, feel free to submit a Github Issue [here](https://github.com/gocarta/chattanooga-parking-network-map/issues) or email the project maintainer Daniel Dufour at danieldufour@gocarta.org.
