@@ -401,6 +401,7 @@
         }
 
         #map-wrapper {
+            border: 2px solid chartreuse;
             bottom: 0px;
             height: calc(100vh - 50px - 50px);
             left: 200px;
@@ -987,6 +988,9 @@
             });
 
             app.data.parking_options.forEach(function (item) {
+                // if doesn't have hourly rate skip, becuase don't want lot appearing on map without icon
+                if (item["Hourly Rate"].trim() === "") return;
+
                 const osm_ids = item["OSM ID"].toString();
                 if (osm_ids !== "") {
                     osm_ids.split(",").forEach(function (osm_id) {
@@ -1384,8 +1388,6 @@
         }), "top-right");
 
         app.promises.load_validators.then(function () {
-            console.log("loaded validators");
-
             const popup = new maplibregl.Popup({closeButton: false, closeOnClick: false, offset: 25});
 
             const markers = [];
@@ -1424,7 +1426,6 @@
                 }
 
                 const marker = new maplibregl.Marker({ element: el }).setLngLat(point).addTo(map);
-                console.log("added validator marker");
 
                 markers.push(marker);
             });
