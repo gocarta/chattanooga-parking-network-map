@@ -1721,42 +1721,51 @@
                             fetch(url)
                                 .then(function (response) { return response.json(); })
                                 .then(function (data) {
-                                    const features = data.features;
-                                    for (let i = 0; i < features.length; i++) {
-                                        const feat = features[i];
-                                        const props = feat.properties;
-                                        if (feat.geometry.type !== "Point") continue;
-                                        const point = feat.geometry.coordinates;
-                                        if (!point) continue;
+                                    try {
+                                        const features = data.features;
+                                        for (let i = 0; i < features.length; i++) {
+                                            const feat = features[i];
+                                            const props = feat.properties;
+                                            if (feat.geometry.type !== "Point") continue;
+                                            const point = feat.geometry.coordinates;
+                                            if (!point) continue;
 
-                                        const vid = props.vehicle_id;
-                                        const route_id = props.route_id;
-                            
-                                        // find pre-existing marker
-                                        const marker = app.state.markers.shuttles.find(function (marker) {
-                                            return marker.getElement().getAttribute("data-vid") === vid;
-                                        });
-                                        if (marker) {
-                                            // check if vehicle still running shuttle route
-                                            if (route_id === "15" || route_id === "33") {
-                                                const lngLat = marker.getLngLat();
-                                                if (lngLat.lng !== point[0] || lngLat.lat !== point[1]) {
-                                                    marker.setLngLat(point);
-                                                    console.log("updated lnglat");
+                                            const vid = props.vehicle_id;
+                                            const route_id = props.route_id;
+                                
+                                            // find pre-existing marker
+                                            const marker = app.state.markers.shuttles.find(function (marker) {
+                                                return marker.getElement().getAttribute("data-vid") === vid;
+                                            });
+                                            if (marker) {
+                                                // check if vehicle still running shuttle route
+                                                if (route_id === "15" || route_id === "33") {
+                                                    const lngLat = marker.getLngLat();
+                                                    if (lngLat.lng !== point[0] || lngLat.lat !== point[1]) {
+                                                        marker.setLngLat(point);
+                                                        console.log("updated lnglat");
+                                                    }
+                                                } else {
+                                                    console.log("removing vehicle " + vid + " because it's no longer running a shuttle route");
+                                                    map.remove(marker);
                                                 }
                                             } else {
-                                                console.log("removing vehicle " + vid + " because it's no longer running a shuttle route");
-                                                map.remove(marker);
-                                            }
-                                        } else {
 
+                                            }
                                         }
+                                    } catch (error) {
+                                        console.error(error);
+                                        throw error;
                                     }
                                 });
 
                         }, 500);
                     });
             })();
+        });
+
+        map.on("error", e => {
+            console.error("MAP ERROR", e);
         });
             
     </script>
