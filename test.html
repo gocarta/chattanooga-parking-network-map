@@ -52,6 +52,7 @@
     <script>
         /*
             z-index:
+            20 - mobile menu
             15 - search suggestions
             14 - map popup
             13 - filtered marker
@@ -314,6 +315,53 @@
             z-index: 9;            
         }
 
+        #mobile-menu {
+            background: #f6f8fc;
+            bottom: 0;
+            display: none;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 20;
+        }
+        #app[data-show-mobile-menu=true] #mobile-menu {
+            display: block;
+        }
+        #mobile-menu-top {
+            display: block;
+            padding: 10px;
+            text-align: right;
+            width: 100%;
+        }
+        #mobile-menu-exit-button {
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 0 0 2px rgba(0,0,0,.1);
+            box-sizing: border-box;
+            cursor: pointer;
+            height: 50px;
+            margin-left: auto;
+            margin-right: 0px;
+            outline: none;
+            padding: 5px;
+            position: relative;
+            text-align: right;
+            width: 50px;
+        }
+        #mobile-menu-exit-button img {
+            height: 29px;
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 29px;
+        }
+        #mobile-menu-middle {
+            margin: 0 auto;
+            max-width: 400px;
+        }
+
         #left-panel {
             background: white;
             bottom: 0;
@@ -414,6 +462,7 @@
         }
         #parking-options-list {
             padding: 5px;
+            position: relative;
         }
 
         #map-wrapper {
@@ -701,6 +750,17 @@
             width: 3px;
         }
 
+        #more-options-button {
+            background: white;
+            /* box-shadow: ; */
+            bottom: 15px;
+            height: 36px;
+            left: 15px;
+            position: absolute;
+            width: 36px;
+            z-index: 10;
+        }
+
         footer {
             background: #012647;
             bottom: 0;
@@ -819,6 +879,9 @@
             #header-content-right {
                 display: none;
             }
+            .maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right, .maplibregl-ctrl-top-left, .maplibregl-ctrl-top-right {
+                z-index: 18;
+            }
             footer {
                 display: none;
             }
@@ -848,6 +911,12 @@
                 serialize_filter: function () {
                     document.getElementById("app").setAttribute("data-map-filter", app.state.filter);
                 },
+                hide_mobile_menu: function () {
+                    document.getElementById("app").setAttribute("data-show-mobile-menu", "false");
+                },
+                show_mobile_menu: function () {
+                    document.getElementById("app").setAttribute("data-show-mobile-menu", "true");
+                },
                 show_first_hour_free: function () {
                     console.log("showing first hour free");
                     document.getElementById("app").setAttribute("data-map-filter", "first_hour_free");
@@ -868,6 +937,7 @@
             promises: {},
             state: {
                 filter: null, // "first_hour_free", "validation_accepted", or "consumer_rate_guarantee"
+                display_mobile_menu: false,
                 markers: {
                     parking: null,
                     shuttles: null,
@@ -1038,6 +1108,60 @@
         </div>
     </header>
     <div id="middle">
+        <div id="mobile-menu">
+            <div id="mobile-menu-top">
+                <div id="mobile-menu-exit-button" onclick="app.funcs.hide_mobile_menu()"><img src="./public/assets/exit-cancel.svg"></div>
+            </div>
+            <div id="mobile-menu-middle">
+                <div id="parking-options-list">
+                    <div id="parking-options-card-first-hour-free" class="parking-options-card">
+                        <div class="parking-option-card-content">
+                            <div class="parking-option-card-image-wrapper">
+                                <img class="parking-option-card-image" src="./public/assets/first-hour-free.png">
+                            </div>
+                            <div class="parking-option-card-content-text">
+                                <div class="parking-option-card-title">FIRST HOUR FREE</div>
+                                <div class="parking-option-card-description">Show all parking locations with the first hour free.</div>
+                            </div>
+                        </div>
+                        <div class="parking-options-card-bottom">
+                            <div class="parking-options-card-bottom-button" onclick="app.funcs.show_first_hour_free()">SHOW ON MAP</div>
+                            <div class="parking-options-card-bottom-button-reset" onclick="app.funcs.reset_map_filter()">RESET MAP</div>
+                        </div>
+                    </div>
+                    <div id="parking-options-card-validation-accepted" class="parking-options-card">
+                        <div class="parking-option-card-content">
+                            <div class="parking-option-card-image-wrapper">
+                                <img class="parking-option-card-image" src="./public/assets/validation-accepted.png">
+                            </div>
+                            <div class="parking-option-card-content-text">
+                                <div class="parking-option-card-title">VALIDATION ACCEPTED</div>
+                                <div class="parking-option-card-description">Show all merchants that validate parking.</div>
+                            </div>
+                        </div>
+                        <div class="parking-options-card-bottom">
+                            <div class="parking-options-card-bottom-button" onclick="app.funcs.show_validation_accepted()">SHOW ON MAP</div>
+                            <div class="parking-options-card-bottom-button-reset" onclick="app.funcs.reset_map_filter()">RESET MAP</div>
+                        </div>
+                    </div>  
+                    <div id="parking-options-card-consumer-rate-guarantee" class="parking-options-card">
+                        <div class="parking-option-card-content">
+                            <div class="parking-option-card-image-wrapper">
+                                <img class="parking-option-card-image" src="./public/assets/cpn-logo.png">
+                            </div>
+                            <div class="parking-option-card-content-text">
+                                <div class="parking-option-card-title">CONSUMER RATE GUARANTEE</div>
+                                <div class="parking-option-card-description">Show all Parking Network locations that meet the Consumer Rate Guarantee (regulated rates and fees).</div>
+                            </div>
+                        </div>
+                        <div class="parking-options-card-bottom">
+                            <div class="parking-options-card-bottom-button" onclick="app.funcs.show_consumer_rate_guarantee()">SHOW ON MAP</div>
+                            <div class="parking-options-card-bottom-button-reset" onclick="app.funcs.reset_map_filter()">RESET MAP</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="left-panel" class="panel">
             <div id="about">
                 <div id="about-h1">ABOUT THE MAP</div>
@@ -1094,6 +1218,7 @@
         <div id="map-wrapper">
             <div id="map-overlay"></div>
             <div id="map"></div>
+            <!-- <div id="more-options-button"><img src="./public/assets/settings.svg"></div> -->
         </div>
         <div id="right-panel" class="panel">
             <div id="right-panel-top">
@@ -1199,6 +1324,69 @@
             center: [-85.3095658, 35.0449601],
             style: "./public/assets/style.json"
         });
+
+        class BasicButtonControl {
+            constructor() {
+                this._onClick = this._onClick.bind(this);
+                this.container = null;
+                this.button = null;
+            }
+
+            onAdd(map) {
+                this.map = map;
+                this._createUI();
+                this._bindUIEvents();
+                return this.container;
+            }
+
+            onRemove() {
+                this._unbindUIEvents();
+                if (this.container) this.container.remove();
+                this.map = undefined;
+            }
+
+            _onClick() {
+                app.funcs.show_mobile_menu();
+            }
+
+            _createUI() {
+                this._createContainer();
+                this._createButton();
+                this._assemble();
+            }
+
+            _bindUIEvents() {
+                this.button.addEventListener("click", this._onClick);
+            }
+
+            _unbindUIEvents() {
+                this.button?.removeEventListener("click", this._onClick);
+            }
+
+            _assemble() {
+                this.container.appendChild(this.button);
+            }
+
+            _createContainer() {
+                this.container = document.createElement("div");
+                this.container.className = "maplibregl-ctrl maplibregl-ctrl-group";
+            }
+
+            _createButton() {
+                this.button = document.createElement("button");
+                const img = document.createElement("img");
+                img.src = "./public/assets/settings.svg";
+                img.style.width = "20px";
+                img.style.height = "20px";
+                img.style.position = "absolute";
+                img.style.top = "50%";
+                img.style.left = "50%";
+                img.style.transform = "translate(-50%, -50%)";
+                this.button.appendChild(img);
+            }
+            }
+
+        map.addControl(new BasicButtonControl(), "bottom-left");
 
         const geocoderApi = {
             forwardGeocode: async function (config) {
@@ -1721,51 +1909,42 @@
                             fetch(url)
                                 .then(function (response) { return response.json(); })
                                 .then(function (data) {
-                                    try {
-                                        const features = data.features;
-                                        for (let i = 0; i < features.length; i++) {
-                                            const feat = features[i];
-                                            const props = feat.properties;
-                                            if (feat.geometry.type !== "Point") continue;
-                                            const point = feat.geometry.coordinates;
-                                            if (!point) continue;
+                                    const features = data.features;
+                                    for (let i = 0; i < features.length; i++) {
+                                        const feat = features[i];
+                                        const props = feat.properties;
+                                        if (feat.geometry.type !== "Point") continue;
+                                        const point = feat.geometry.coordinates;
+                                        if (!point) continue;
 
-                                            const vid = props.vehicle_id;
-                                            const route_id = props.route_id;
-                                
-                                            // find pre-existing marker
-                                            const marker = app.state.markers.shuttles.find(function (marker) {
-                                                return marker.getElement().getAttribute("data-vid") === vid;
-                                            });
-                                            if (marker) {
-                                                // check if vehicle still running shuttle route
-                                                if (route_id === "15" || route_id === "33") {
-                                                    const lngLat = marker.getLngLat();
-                                                    if (lngLat.lng !== point[0] || lngLat.lat !== point[1]) {
-                                                        marker.setLngLat(point);
-                                                        console.log("updated lnglat");
-                                                    }
-                                                } else {
-                                                    console.log("removing vehicle " + vid + " because it's no longer running a shuttle route");
-                                                    map.remove(marker);
+                                        const vid = props.vehicle_id;
+                                        const route_id = props.route_id;
+                            
+                                        // find pre-existing marker
+                                        const marker = app.state.markers.shuttles.find(function (marker) {
+                                            return marker.getElement().getAttribute("data-vid") === vid;
+                                        });
+                                        if (marker) {
+                                            // check if vehicle still running shuttle route
+                                            if (route_id === "15" || route_id === "33") {
+                                                const lngLat = marker.getLngLat();
+                                                if (lngLat.lng !== point[0] || lngLat.lat !== point[1]) {
+                                                    marker.setLngLat(point);
+                                                    console.log("updated lnglat");
                                                 }
                                             } else {
-
+                                                console.log("removing vehicle " + vid + " because it's no longer running a shuttle route");
+                                                map.remove(marker);
                                             }
+                                        } else {
+
                                         }
-                                    } catch (error) {
-                                        console.error(error);
-                                        throw error;
                                     }
                                 });
 
                         }, 500);
                     });
             })();
-        });
-
-        map.on("error", e => {
-            console.error("MAP ERROR", e);
         });
             
     </script>
