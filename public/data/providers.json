@@ -20,7 +20,8 @@
     "Fine": "$20.00",
     "Spaces": "350",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "606517184",
@@ -43,7 +44,8 @@
     "Fine": "$40.00",
     "Spaces": "15",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "168382817",
@@ -66,7 +68,8 @@
     "Fine": "$40.00",
     "Spaces": "61",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "No"
+    "Consumer Rate Guarantee": "No",
+    "Source": ""
   },
   {
     "OSM ID": "78438853",
@@ -89,7 +92,8 @@
     "Fine": "",
     "Spaces": "170",
     "Validation Accepted": "No",
-    "Consumer Rate Guarantee": "No"
+    "Consumer Rate Guarantee": "No",
+    "Source": ""
   },
   {
     "OSM ID": "78344392",
@@ -112,7 +116,8 @@
     "Fine": "",
     "Spaces": "223",
     "Validation Accepted": "No",
-    "Consumer Rate Guarantee": "No"
+    "Consumer Rate Guarantee": "No",
+    "Source": ""
   },
   {
     "OSM ID": "393625822",
@@ -135,7 +140,8 @@
     "Fine": "$16.00 ",
     "Spaces": "70",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "8450645",
@@ -158,7 +164,8 @@
     "Fine": "$16.00 ",
     "Spaces": "47",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "45132319",
@@ -181,7 +188,8 @@
     "Fine": "N/A",
     "Spaces": "314",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "78329127",
@@ -204,7 +212,8 @@
     "Fine": "N/A",
     "Spaces": "1005",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "116818995",
@@ -227,7 +236,8 @@
     "Fine": "$15.00",
     "Spaces": "149",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "75937164,75936140,81251153",
@@ -250,7 +260,8 @@
     "Fine": "$21.00",
     "Spaces": "230",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "45095113",
@@ -273,7 +284,8 @@
     "Fine": "$21.00",
     "Spaces": "347",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "17721265",
@@ -296,7 +308,8 @@
     "Fine": "$21.00",
     "Spaces": "219",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "45509897",
@@ -319,7 +332,8 @@
     "Fine": "N/A",
     "Spaces": "540",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "17818079",
@@ -342,7 +356,8 @@
     "Fine": "$13.00",
     "Spaces": "65",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "45094907",
@@ -365,7 +380,8 @@
     "Fine": "N/A",
     "Spaces": "605",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "14691568",
@@ -388,7 +404,8 @@
     "Fine": "$21.00",
     "Spaces": "192",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": "Yes"
+    "Consumer Rate Guarantee": "Yes",
+    "Source": ""
   },
   {
     "OSM ID": "78344284",
@@ -411,7 +428,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -434,7 +452,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "66980495",
@@ -445,19 +464,20 @@
     "Latitude": "35.0452298",
     "Longitude": "-85.3099148",
     "Address": "1-99 E 10th St, Chattanooga, TN 37402",
-    "Price Guide": "",
+    "Price Guide": "MODERATE",
     "First Hour Free": "No",
-    "Minimum": "",
+    "Minimum": "30 minutes",
     "Maximum": "",
-    "Hourly Rate": "",
+    "Hourly Rate": "Starting at $2.75 for 30 minutes",
     "Free Hours": "",
     "Open Hours": "",
-    "Hourly Rate (Details)": "",
-    "Daily Max": "$8.00",
+    "Hourly Rate (Details)": "Up to 30 mins = $2.75\nUp to 1 hour = $3.66\nUp to 2 Hours = $4.58\nUp to 3 hours = $5.49\nUp to 4 Hours = $6.41\nUp to 1 day = $8.24",
+    "Daily Max": "$8.24",
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "YES",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "No",
+    "Source": "https://go.metropolis.io/zone/10-west-martin-luther-king-blvd-chattanooga-tn"
   },
   {
     "OSM ID": "168089139",
@@ -480,7 +500,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "NO",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "66947910",
@@ -503,7 +524,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "120068541",
@@ -526,7 +548,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -549,7 +572,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "744202165",
@@ -572,7 +596,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "66947903",
@@ -595,7 +620,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "120068923",
@@ -618,7 +644,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "120073621",
@@ -641,7 +668,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "120074149",
@@ -664,7 +692,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "730917393",
@@ -687,7 +716,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "168088501",
@@ -710,7 +740,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "66951396",
@@ -733,7 +764,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "68860244",
@@ -756,7 +788,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "150237951",
@@ -779,7 +812,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "10509019",
@@ -802,7 +836,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "151770163",
@@ -825,7 +860,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "1107757814",
@@ -848,7 +884,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "10407945",
@@ -871,7 +908,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "755339483",
@@ -894,7 +932,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "755339483",
@@ -917,7 +956,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "687982526",
@@ -940,7 +980,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "687982529",
@@ -963,7 +1004,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "150236152",
@@ -986,7 +1028,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "151770164",
@@ -1009,7 +1052,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -1032,7 +1076,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -1055,7 +1100,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -1078,7 +1124,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -1101,7 +1148,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "",
@@ -1124,7 +1172,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "10387154",
@@ -1147,7 +1196,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "733437002",
@@ -1170,7 +1220,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "607193930",
@@ -1193,7 +1244,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "181659050",
@@ -1216,7 +1268,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "224527928",
@@ -1239,7 +1292,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "607979064",
@@ -1262,7 +1316,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "1186468",
@@ -1285,7 +1340,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "753453867",
@@ -1308,7 +1364,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "759465107",
@@ -1331,7 +1388,8 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   },
   {
     "OSM ID": "263343592",
@@ -1354,6 +1412,7 @@
     "Fine": "",
     "Spaces": "",
     "Validation Accepted": "",
-    "Consumer Rate Guarantee": ""
+    "Consumer Rate Guarantee": "",
+    "Source": ""
   }
 ]
